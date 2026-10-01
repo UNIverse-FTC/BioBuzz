@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.HardwareManager;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 
+@TeleOp(name="Meet0 Teleop")
 public class Teleop extends LinearOpMode {
 
     private HardwareManager hardwareManager;
-    private HardwareMap hardwareMap;
+
 
 
     private Drivetrain drivetrain;
