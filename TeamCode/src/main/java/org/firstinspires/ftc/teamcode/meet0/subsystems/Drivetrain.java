@@ -8,7 +8,9 @@ public class Drivetrain {
 
     public final  MecanumDrive driveTrain;
 
-    public Drivetrain(HardwareManager hardware){driveTrain=hardware.mecanum;}
+    public Drivetrain(HardwareManager hardware){
+        driveTrain=hardware.mecanum;
+    }
 
     public  void Drive(double lateral, double horizontal, double strafe)
     {
