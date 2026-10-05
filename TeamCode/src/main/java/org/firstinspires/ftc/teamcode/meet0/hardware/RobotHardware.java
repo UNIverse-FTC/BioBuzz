@@ -5,9 +5,9 @@ import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
-public class HardwareManager {
+public class RobotHardware {
 
-    public HardwareManager(HardwareMap hardwareMap) {
+    public RobotHardware(HardwareMap hardwareMap) {
         init(hardwareMap);
     }
     public MotorEx frontLeft, backLeft, frontRight, backRight, shooter1, shooter2, intake;
