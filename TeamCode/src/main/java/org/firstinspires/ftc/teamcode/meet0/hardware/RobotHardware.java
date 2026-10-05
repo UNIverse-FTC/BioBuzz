@@ -21,7 +21,7 @@ public class RobotHardware {
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
 
         shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
-        shooter1 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
+        shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         mecanum.setRightSideInverted(true);

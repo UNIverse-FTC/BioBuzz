@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
-import static org.firstinspires.ftc.teamcode.meet0.util.Constants.SHOOTER_POWER;
+import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
