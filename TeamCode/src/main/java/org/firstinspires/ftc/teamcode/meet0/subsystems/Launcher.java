@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.subsystems;
 
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
@@ -15,8 +16,8 @@ public class Launcher {
     }
     public void launch(Gamepad gamepad) {
         if(gamepad.a) {
-            shooter2.set(Constants.SHOOTER_SPEED);
-            shooter1.set(Constants.SHOOTER_SPEED);
+            shooter2.set(Constants.SHOOTER_POWER);
+            shooter1.set(Constants.SHOOTER_POWER);
         }
     }
 }

@@ -20,8 +20,8 @@ public class RobotHardware {
         backLeft = new MotorEx(hardwareMap, "backLeft", Motor.GoBILDA.RPM_312);
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
 
-        shooter1 = new MotorEx(hardwareMap, "shooter1", Motor.GoBILDA.BARE);
-        shooter1 = new MotorEx(hardwareMap, "shooter2", Motor.GoBILDA.BARE);
+        //shooter1 = new MotorEx(hardwareMap, "shooter1", Motor.GoBILDA.BARE);
+        //shooter1 = new MotorEx(hardwareMap, "shooter2", Motor.GoBILDA.BARE);
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         mecanum.setRightSideInverted(true);
