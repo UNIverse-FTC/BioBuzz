@@ -28,11 +28,14 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.update();
-            drivetrain.Drive(
-                    gamepad1.right_stick_x * 0.5,
-                    gamepad1.left_stick_y * 0.5,
-                    gamepad1.left_stick_x * 0.5);
+         //   drivetrain.Drive(
+            //        gamepad1.right_stick_x * 0.5,
+            //        gamepad1.left_stick_y * 0.5,
+             //       gamepad1.left_stick_x * 0.5);
             launcher.launch(gamepad1);
+
+
+
         }
     }
 
