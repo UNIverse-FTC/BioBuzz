@@ -20,5 +20,10 @@ public class Launcher {
             shooter2.set(Constants.Launcher.SHOOTER_POWER);
             shooter1.set(Constants.Launcher.SHOOTER_POWER);
         }
+        else
+        {
+            shooter1.set(0);
+            shooter2.set(0);
+        }
     }
 }

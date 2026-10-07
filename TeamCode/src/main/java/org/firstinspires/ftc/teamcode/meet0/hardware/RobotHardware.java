@@ -13,7 +13,7 @@ public class RobotHardware {
     public MotorEx frontLeft, backLeft, frontRight, backRight, shooter1, shooter2, intake;
     public MecanumDrive mecanum;
     private void init(HardwareMap hardwareMap) {
-        // Hardware initialization goes here.
+
 
         frontLeft = new MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_312);
         frontRight = new MotorEx(hardwareMap, "frontRight", Motor.GoBILDA.RPM_312);
@@ -24,6 +24,8 @@ public class RobotHardware {
 
         shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
         shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
+
+        intake = new MotorEx(hardwareMap, "intake", Motor.GoBILDA.BARE);
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
        // mecanum.setRightSideInverted(true);

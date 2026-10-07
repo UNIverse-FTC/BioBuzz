@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
+import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -22,6 +23,7 @@ public class Teleop extends LinearOpMode {
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
         Launcher launcher = new Launcher(robotHardware);
+        Intake intake = new Intake(robotHardware);
         waitForStart();
 
 
@@ -33,7 +35,7 @@ public class Teleop extends LinearOpMode {
             //        gamepad1.left_stick_y * 0.5,
              //       gamepad1.left_stick_x * 0.5);
             launcher.launch(gamepad1);
-
+            intake.suck(gamepad1);
 
 
         }
