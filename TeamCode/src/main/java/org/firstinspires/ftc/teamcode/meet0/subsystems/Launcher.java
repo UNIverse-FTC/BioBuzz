@@ -34,7 +34,7 @@ public class Launcher {
         shooterLeft = new ShooterLeft();
         shooterRight = new ShooterRight();
     }
-    public void update(Gamepad gamepad) {
+    public void update() {
         double targetRpm;
 
         motor1.set(targetRPM1 / (6000 * 0.9));

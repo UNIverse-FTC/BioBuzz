@@ -50,7 +50,7 @@ public class Teleop extends LinearOpMode {
             else {
                 launcher.shooterRight.setRPM(0);
             }
-            launcher.update(gamepad1);
+            launcher.update();
 
         }
     }
