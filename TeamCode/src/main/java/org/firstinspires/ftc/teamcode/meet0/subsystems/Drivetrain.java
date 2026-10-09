@@ -16,7 +16,7 @@ public class Drivetrain {
 
     public  void Drive(double lateral, double horizontal, double strafe)
     {
-       driveTrain.driveRobotCentric(strafe, lateral, horizontal);
+       driveTrain.driveRobotCentric(strafe, -lateral, horizontal);
     }
 
 

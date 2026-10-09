@@ -20,7 +20,7 @@ public class Teleop extends LinearOpMode {
     public void runOpMode()
     {
 
-        RobotHardware robotHardware = new RobotHardware(hardwareMap);
+        RobotHardware robotHardware = new RobotHardware(hardwareMap, telemetry);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
@@ -30,13 +30,27 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.update();
-         //   drivetrain.Drive(
-            //        gamepad1.right_stick_x * 0.5,
-            //        gamepad1.left_stick_y * 0.5,
-             //       gamepad1.left_stick_x * 0.5);
-            launcher.launch(gamepad1);
+            drivetrain.Drive(
+                    gamepad1.right_stick_x * 0.5,
+                    gamepad1.left_stick_y * 0.5,
+                    gamepad1.left_stick_x * 0.5);
             intake.suck(gamepad1);
 
+            if(gamepad1.a) {
+                launcher.shooterLeft.setRPM(Constants.SHOOTER_POWER);
+            }
+            else
+            {
+                launcher.shooterLeft.setRPM(0);
+            }
+
+            if(gamepad1.b) {
+                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
+            }
+            else {
+                launcher.shooterRight.setRPM(0);
+            }
+            launcher.update(gamepad1);
 
         }
     }
