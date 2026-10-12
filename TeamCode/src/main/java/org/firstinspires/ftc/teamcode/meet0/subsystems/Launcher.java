@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.meet0.subsystems;
 
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.seattlesolvers.solverslib.hardware.ServoEx;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet0.opmodes.Teleop;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.LauncherState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
@@ -26,10 +28,14 @@ public class Launcher {
     public ShooterLeft shooterLeft;
     public ShooterRight shooterRight;
 
+    private ServoEx hoodServo;
+
     public Launcher(RobotHardware robotHardware) {
         this.motor1 = robotHardware.shooter1;
         this.motor2 = robotHardware.shooter2;
         this.telemetry = robotHardware.telemetry;
+
+        this.hoodServo = robotHardware.hoodServo;
 
         shooterLeft = new ShooterLeft();
         shooterRight = new ShooterRight();
@@ -74,6 +80,15 @@ public class Launcher {
                 launcherState2 = LauncherState.NOTREADY;
             }
             return launcherState2;
+        }
+
+        public void setHood(HoodState hoodState) {
+            if (hoodState == HoodState.POLLEN) {
+                hoodServo.set(Constants.SERVO_POLLEN);
+            }
+            else {
+                hoodServo.set(Constants.SERVO_NECTAR);
+            }
         }
     }
 

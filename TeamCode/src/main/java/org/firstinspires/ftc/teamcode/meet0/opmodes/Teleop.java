@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -26,32 +27,76 @@ public class Teleop extends LinearOpMode {
         Intake intake = new Intake(robotHardware);
         waitForStart();
 
+        boolean leftOnLast = false;
+        boolean leftOn = false;
 
+        boolean rightOnLast = false;
+        boolean rightOn = false;
+
+        boolean hoodLast = false;
+        boolean hood = false;
 
         while (opModeIsActive()) {
-            telemetry.update();
+
+            telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
             drivetrain.Drive(
                     gamepad1.right_stick_x * 0.5,
                     gamepad1.left_stick_y * 0.5,
                     gamepad1.left_stick_x * 0.5);
             intake.suck(gamepad1);
 
-            if(gamepad1.a) {
-                launcher.shooterLeft.setRPM(Constants.SHOOTER_POWER);
+            boolean leftOnCurrent = gamepad1.a;
+            boolean rightOnCurrent = gamepad1.b;
+            boolean hoodCurrent = gamepad1.x;
+
+
+
+            if(leftOnCurrent && !leftOnLast) {
+                leftOn = !leftOn;
             }
-            else
-            {
+            if(rightOnCurrent && !rightOnLast) {
+                rightOn = !rightOn;
+            }
+            if(hoodCurrent && !hoodLast) {
+                hood = !hood;
+            }
+
+            leftOnLast = leftOnCurrent;
+            rightOnLast = rightOnCurrent;
+            hoodLast = hoodCurrent;
+
+
+            if (!leftOn) {
                 launcher.shooterLeft.setRPM(0);
             }
-
-            if(gamepad1.b) {
-                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
-            }
             else {
+                launcher.shooterLeft.setRPM(Constants.SHOOTER_POWER);
+            }
+
+
+
+            if (!rightOn) {
                 launcher.shooterRight.setRPM(0);
             }
-            launcher.update();
+            else {
+                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
+            }
 
+            if (hood) {
+                launcher.shooterLeft.setHood(HoodState.NECTAR);
+            }
+            else {
+                launcher.shooterLeft.setHood(HoodState.POLLEN);
+            }
+
+
+            telemetry.addLine("leftOn: " + leftOn);
+            telemetry.addLine("rightOn: " + rightOn);
+            telemetry.addLine("hood: " + hood);
+
+
+            launcher.update();
+            telemetry.update();
         }
     }
 
