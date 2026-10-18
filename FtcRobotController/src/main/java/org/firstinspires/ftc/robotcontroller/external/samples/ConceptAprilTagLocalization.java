@@ -45,7 +45,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
-
 /*
  * This OpMode illustrates the basics of AprilTag based localization.
  *
