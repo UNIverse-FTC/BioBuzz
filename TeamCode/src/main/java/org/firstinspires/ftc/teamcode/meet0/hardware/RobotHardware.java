@@ -19,12 +19,15 @@ public class RobotHardware {
 
     }
     public MotorEx frontLeft, backLeft, frontRight, backRight, shooter1, shooter2, intake;
+    public HardwareMap hardwareMap;
     public MecanumDrive mecanum;
 
     public ServoEx hoodServo;
 
 
     private void init(HardwareMap hardwareMap) {
+
+        this.hardwareMap = hardwareMap;
 
 
         frontLeft = new MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_312);

@@ -41,8 +41,6 @@ public class Launcher {
         shooterRight = new ShooterRight();
     }
     public void update() {
-        double targetRpm;
-
         motor1.set(targetRPM1 / (6000 * 0.9));
         motor2.set(targetRPM2 / (6000 * 0.9));
         RPM1 = motor1.getCorrectedVelocity() / motor1.getCPR() * 60;
