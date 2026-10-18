@@ -19,11 +19,11 @@ public class Launcher {
 
     private Telemetry telemetry;
 
-    private double targetRPM1, targetRPM2, RPM1, RPM2;
+    private double targetRPM_R, targetRPM_L, RPM_R, RPM_L;
 
-    private boolean ready1, ready2;
+    private boolean ready_R, ready_L;
 
-    private LauncherState launcherState2, launcherState1 = LauncherState.IDLE;
+    private LauncherState launcherState_L, launcherState_R = LauncherState.IDLE;
 
     public ShooterLeft shooterLeft;
     public ShooterRight shooterRight;
@@ -40,46 +40,48 @@ public class Launcher {
         shooterLeft = new ShooterLeft();
         shooterRight = new ShooterRight();
     }
+
+
     public void update() {
         double targetRpm;
 
-        motor1.set(targetRPM1 / (6000 * 0.9));
-        motor2.set(targetRPM2 / (6000 * 0.9));
-        RPM1 = motor1.getCorrectedVelocity() / motor1.getCPR() * 60;
-        RPM2 = motor2.getCorrectedVelocity() / motor2.getCPR() * 60;
+        motor1.set(targetRPM_R / (6000 * 0.9));
+        motor2.set(targetRPM_L / (6000 * 0.9));
+        RPM_R = motor1.getCorrectedVelocity() / motor1.getCPR() * 60;
+        RPM_L = motor2.getCorrectedVelocity() / motor2.getCPR() * 60;
 
-        ready1 = Math.abs(RPM1 - targetRPM1) < 100;
-        ready2 = Math.abs(RPM2 - targetRPM2) < 100;
+        ready_R = Math.abs(RPM_R - targetRPM_R) < 100;
+        ready_L = Math.abs(RPM_L - targetRPM_L) < 100;
 
-        telemetry.addLine("RPM1: " + RPM1);
-        telemetry.addLine("RPM2: " + RPM2);
+        telemetry.addLine("RPM1: " + RPM_R);
+        telemetry.addLine("RPM2: " + RPM_L);
 
-        telemetry.addLine("ready1? " + ready1);
-        telemetry.addLine("ready2? " + ready2);
+        telemetry.addLine("ready1? " + ready_R);
+        telemetry.addLine("ready2? " + ready_L);
 
     }
 
     public class ShooterLeft {
         public void setRPM(double targetRPM) {
-            targetRPM2 = targetRPM;
+            targetRPM_L = targetRPM;
         }
 
         public double getRPM() {
-            return  RPM2;
+            return  RPM_L;
         }
 
         public LauncherState getLauncherState() {
-            if (ready2) {
-                if (RPM2 == 0 & targetRPM2 == 0) {
-                    launcherState2 = LauncherState.IDLE;
+            if (ready_L) {
+                if (RPM_L == 0 & targetRPM_L == 0) {
+                    launcherState_L = LauncherState.IDLE;
                 }
                 else {
-                    launcherState2 = LauncherState.READY;
+                    launcherState_L = LauncherState.READY;
                 }
             } else {
-                launcherState2 = LauncherState.NOTREADY;
+                launcherState_L = LauncherState.NOTREADY;
             }
-            return launcherState2;
+            return launcherState_L;
         }
 
         public void setHood(HoodState hoodState) {
@@ -94,25 +96,26 @@ public class Launcher {
 
     public class ShooterRight {
         public void setRPM(double targetRPM) {
-            targetRPM1 = targetRPM;
+            targetRPM_R = targetRPM;
         }
 
+
         public double getRPM() {
-            return  RPM1;
+            return  RPM_R;
         }
 
         public LauncherState getLauncherState() {
-            if (ready1) {
-                if (RPM1 == 0 & targetRPM1 == 0) {
-                    launcherState1 = LauncherState.IDLE;
+            if (ready_R) {
+                if (RPM_R == 0 & targetRPM_R == 0) {
+                    launcherState_R = LauncherState.IDLE;
                 }
                 else {
-                    launcherState1 = LauncherState.READY;
+                    launcherState_R = LauncherState.READY;
                 }
             } else {
-                launcherState1 = LauncherState.NOTREADY;
+                launcherState_R = LauncherState.NOTREADY;
             }
-            return launcherState1;
+            return launcherState_R;
         }
     }
 }
