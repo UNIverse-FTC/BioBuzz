@@ -5,6 +5,7 @@ import com.pedropathing.utils.Timer;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class PathExecutor {
@@ -15,10 +16,13 @@ public class PathExecutor {
 
     private HardwareMap hardwareMap;
 
+    private Launcher launcher;
+
     public PathExecutor(RobotHardware robotHardware) {
         this.hardwareMap = robotHardware.hardwareMap;
     }
-    public void init() {
+    public void init(Launcher launcher) {
+        this.launcher = launcher;
         pathTimer = new Timer();
         follower = Constants.create(hardwareMap);
         paths = new Paths();
@@ -39,21 +43,27 @@ public class PathExecutor {
                     pathState++;
                     break;
                 }
-            case(2):
+            case (2):
+                if(!follower.isBusy()) {
+                    launcher.shooterLeft.setRPM(2000);
+                    pathTimer.reset();
+                    pathState++;
+                }
+            case(3):
                 if (!follower.isBusy()) {
                     follower.follow(paths.path3());
                     pathTimer.reset();
                     pathState++;
                     break;
                 }
-            case(3):
+            case(4):
                 if (!follower.isBusy()) {
                     follower.follow(paths.path4());
                     pathTimer.reset();
                     pathState++;
                     break;
                 }
-            case(4):
+            case(5):
                 if (!follower.isBusy()) {
                     follower.follow(paths.path5());
                     pathTimer.reset();
