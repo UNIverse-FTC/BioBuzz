@@ -7,6 +7,7 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
+import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
 public class Drivetrain {
 
@@ -18,6 +19,7 @@ public class Drivetrain {
     private boolean aiming = false;
     public Drivetrain(RobotHardware hardware){
         driveTrain = hardware.mecanum;
+        follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
     }
 
     public  void Drive(double lateral, double horizontal, double strafe)
@@ -28,6 +30,7 @@ public class Drivetrain {
         }
 
         robotPosition = follower.pose();
+        Debug.updateRobot(robotPosition);
     }
 
     public void aim(boolean active) {
