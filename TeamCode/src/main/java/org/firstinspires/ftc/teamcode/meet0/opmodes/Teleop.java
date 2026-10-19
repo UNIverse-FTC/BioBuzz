@@ -36,6 +36,9 @@ public class Teleop extends LinearOpMode {
         boolean hoodLast = false;
         boolean hood = false;
 
+        boolean aimLast = false;
+        boolean aim = false;
+
         while (opModeIsActive()) {
 
             telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
@@ -49,6 +52,9 @@ public class Teleop extends LinearOpMode {
             boolean rightOnCurrent = gamepad1.b;
             boolean hoodCurrent = gamepad1.x;
 
+            boolean aimCurrent = gamepad1.left_trigger_pressed;
+
+
 
 
             if(leftOnCurrent && !leftOnLast) {
@@ -60,10 +66,16 @@ public class Teleop extends LinearOpMode {
             if(hoodCurrent && !hoodLast) {
                 hood = !hood;
             }
+            if(aimCurrent && !aimLast) {
+                aim = !aim;
+            }
+
 
             leftOnLast = leftOnCurrent;
             rightOnLast = rightOnCurrent;
             hoodLast = hoodCurrent;
+            aimLast = aimCurrent;
+
 
 
             if (!leftOn) {
@@ -89,6 +101,12 @@ public class Teleop extends LinearOpMode {
                 launcher.shooterLeft.setHood(HoodState.POLLEN);
             }
 
+            if (aim) {
+                drivetrain.aim(true);
+            }
+            else {
+                drivetrain.aim(false);
+            }
 
             telemetry.addLine("leftOn: " + leftOn);
             telemetry.addLine("rightOn: " + rightOn);
