@@ -11,13 +11,12 @@ import org.firstinspires.ftc.teamcode.meet0.opmodes.Teleop;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.LauncherState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
+import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
 
 public class Launcher {
 
     private MotorEx motor1, motor2;
-
-    private Telemetry telemetry;
 
     private double targetRPM1, targetRPM2, RPM1, RPM2;
 
@@ -33,7 +32,6 @@ public class Launcher {
     public Launcher(RobotHardware robotHardware) {
         this.motor1 = robotHardware.shooter1;
         this.motor2 = robotHardware.shooter2;
-        this.telemetry = robotHardware.telemetry;
 
         this.hoodServo = robotHardware.hoodServo;
 
@@ -49,11 +47,11 @@ public class Launcher {
         ready1 = Math.abs(RPM1 - targetRPM1) < 100;
         ready2 = Math.abs(RPM2 - targetRPM2) < 100;
 
-        telemetry.addLine("RPM1: " + RPM1);
-        telemetry.addLine("RPM2: " + RPM2);
+        Debug.telemetry.addLine("RPM1: " + RPM1);
+        Debug.telemetry.addLine("RPM2: " + RPM2);
 
-        telemetry.addLine("ready1? " + ready1);
-        telemetry.addLine("ready2? " + ready2);
+        Debug.telemetry.addLine("ready1? " + ready1);
+        Debug.telemetry.addLine("ready2? " + ready2);
 
     }
 

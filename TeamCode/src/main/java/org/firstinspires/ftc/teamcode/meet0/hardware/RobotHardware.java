@@ -12,10 +12,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 public class RobotHardware {
-    public Telemetry telemetry;
-    public RobotHardware(HardwareMap hardwareMap, Telemetry telemetry) {
+    public RobotHardware(HardwareMap hardwareMap) {
         init(hardwareMap);
-        this.telemetry = telemetry;
 
     }
     public MotorEx frontLeft, backLeft, frontRight, backRight, shooter1, shooter2, intake;
