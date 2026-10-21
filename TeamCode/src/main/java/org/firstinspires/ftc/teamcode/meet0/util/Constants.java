@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.meet0.util;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.math.Pose;
+
 @Configurable
 public class Constants {
 
@@ -15,6 +17,8 @@ public class Constants {
 
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;
+
+    public static Pose HIVE_POSITION = new Pose(58, 58, 0);
 
     public  static class Intake
     {

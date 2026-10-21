@@ -9,5 +9,13 @@ import org.firstinspires.ftc.teamcode.pedro.procedures.MecanumTuner;
 import org.firstinspires.ftc.teamcode.pedro.procedures.PinpointTuner;
 
 public class Tuning {
+    @Tuner
+    public static Procedure mecanumTuner() {
+        return new MecanumTuner();
+    }
+    @Tuner
+    public static Procedure pinpointTuner() {
+        return new PinpointTuner();
+    }
 
 }
