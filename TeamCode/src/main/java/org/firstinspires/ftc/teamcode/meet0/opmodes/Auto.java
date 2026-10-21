@@ -18,14 +18,14 @@ public class Auto extends LinearOpMode {
     public void runOpMode()
     {
 
-        RobotHardware robotHardware = new RobotHardware(hardwareMap, telemetry);
+        RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
         PathExecutor pathExecutor = new PathExecutor(robotHardware);
         waitForStart();
 
-        pathExecutor.init();
+        pathExecutor.init(launcher);
         while (opModeIsActive()) {
             pathExecutor.update();
             launcher.update();
