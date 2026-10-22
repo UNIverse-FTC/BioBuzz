@@ -16,13 +16,20 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
+import com.seattlesolvers.solverslib.util.InterpLUT;
 @TeleOp(name="Meet0 Teleop")
 public class Teleop extends LinearOpMode {
 
 
     public void runOpMode()
     {
-
+        InterpLUT lut = new InterpLUT();
+        double[] lutValues = Constants.LUT.lutValues;
+        for (int i = 0; i < lutValues.length; i+=2)
+        {
+            lut.add(lutValues[i], lutValues[i+1]);
+        }
+        lut.createLUT();
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
@@ -136,7 +143,5 @@ public class Teleop extends LinearOpMode {
             telemetry.update();
         }
     }
-
-
 
 }
