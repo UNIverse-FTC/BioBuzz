@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
-@TeleOp(name="Meet0 Auto")
+@Autonomous(name = "<-- Autonomous ->")
 public class Auto extends LinearOpMode {
 
 

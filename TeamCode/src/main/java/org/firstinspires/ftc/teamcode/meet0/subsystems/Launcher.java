@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.meet0.subsystems;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.hardware.ServoEx;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
+import com.seattlesolvers.solverslib.util.InterpLUT;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
@@ -29,6 +30,10 @@ public class Launcher {
 
     private ServoEx hoodServo;
 
+    private InterpLUT pollenLUT;
+
+    private InterpLUT nectarLUT;
+
     public Launcher(RobotHardware robotHardware) {
         this.motor1 = robotHardware.shooter1;
         this.motor2 = robotHardware.shooter2;
@@ -37,6 +42,11 @@ public class Launcher {
 
         shooterLeft = new ShooterLeft();
         shooterRight = new ShooterRight();
+
+        pollenLUT = new InterpLUT();
+        nectarLUT = new InterpLUT();
+
+        initLUTs();
     }
     public void update() {
         motor1.set(targetRPM1 / (6000 * 0.9));
@@ -56,10 +66,20 @@ public class Launcher {
     }
 
     public class ShooterLeft {
+
+        public HoodState hoodState;
         public void setRPM(double targetRPM) {
             targetRPM2 = targetRPM;
         }
 
+        public void launch(double distance) {
+            if (hoodState == HoodState.NECTAR) {
+                this.setRPM(nectarLUT.get(distance));
+            }
+            else {
+                this.setRPM(pollenLUT.get(distance));
+            }
+        }
         public double getRPM() {
             return  RPM2;
         }
@@ -79,6 +99,7 @@ public class Launcher {
         }
 
         public void setHood(HoodState hoodState) {
+            this.hoodState = hoodState;
             if (hoodState == HoodState.POLLEN) {
                 hoodServo.set(Constants.SERVO_POLLEN);
             }
@@ -96,7 +117,9 @@ public class Launcher {
         public double getRPM() {
             return  RPM1;
         }
-
+        public void launch(double distance) {
+            this.setRPM(pollenLUT.get(distance));
+        }
         public LauncherState getLauncherState() {
             if (ready1) {
                 if (RPM1 == 0 & targetRPM1 == 0) {
@@ -111,4 +134,11 @@ public class Launcher {
             return launcherState1;
         }
     }
+    private void initLUTs() {
+        nectarLUT.add(1, 3);
+        //this continues
+        pollenLUT.add(1,3);
+        //same here
+    }
 }
+

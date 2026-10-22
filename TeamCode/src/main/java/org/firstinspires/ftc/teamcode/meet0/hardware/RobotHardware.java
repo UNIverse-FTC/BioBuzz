@@ -10,6 +10,7 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor.RunMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
+import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 
 public class RobotHardware {
     public RobotHardware(HardwareMap hardwareMap) {
@@ -22,7 +23,7 @@ public class RobotHardware {
 
     public ServoEx hoodServo;
 
-
+    public CustomPID intakePID;
     private void init(HardwareMap hardwareMap) {
 
         this.hardwareMap = hardwareMap;
@@ -54,5 +55,15 @@ public class RobotHardware {
 
         mecanum = new MecanumDrive(frontRight, frontLeft, backRight, backLeft);
         mecanum.setRightSideInverted(true);
+
+        intakePID = new CustomPID(
+                Constants.Intake.KP,
+                Constants.Intake.KI,
+                Constants.Intake.KD,
+                Constants.Intake.KV,
+                Constants.Intake.KS,
+                Constants.Intake.sp,
+                Constants.Intake.pv
+        );
     }
 }
