@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
-@TeleOp(name="Meet0 Teleop")
+@TeleOp(name="<-- TeleOp -->")
 public class Teleop extends LinearOpMode {
 
 
@@ -27,21 +27,7 @@ public class Teleop extends LinearOpMode {
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
         Launcher launcher = new Launcher(robotHardware);
-
-
-
-        CustomPID intakePID = new CustomPID(
-                Constants.Intake.KP,
-                Constants.Intake.KI,
-                Constants.Intake.KD,
-                Constants.Intake.KV,
-                Constants.Intake.KS,
-                Constants.Intake.sp,
-                Constants.Intake.pv
-        );
-        Intake intake = new Intake(robotHardware, intakePID);
-
-
+        Intake intake = new Intake(robotHardware);
 
         Debug.init(telemetry);
         waitForStart();

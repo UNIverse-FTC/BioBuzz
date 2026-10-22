@@ -10,11 +10,10 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Intake {
 
     MotorEx intakeMotor;
-    CustomPID pid;
-    public  Intake(RobotHardware robotHardware, CustomPID pid)
-    {
+    CustomPID customPID;
+    public Intake(RobotHardware robotHardware) {
         intakeMotor = robotHardware.intake;
-        this.pid = pid;
+        customPID = robotHardware.intakePID;
     }
 
 
@@ -22,7 +21,8 @@ public class Intake {
     {
             if(gamepad.b)
             {
-                double power = pid.calculate();
+                //calculating what? how do you control the velocity?
+                double power = customPID.calculate();
                 intakeMotor.set(power);
             }
             else
