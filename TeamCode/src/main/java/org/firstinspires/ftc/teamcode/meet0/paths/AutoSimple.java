@@ -16,6 +16,7 @@ public class AutoSimple {
     private final Pose point5 = poseFactory.of(60, 112, -90);
     private final Pose point6 = poseFactory.of(8, 112, 0);
 
+
     public Path path1() {
         return line(start, path1).linear(start, path1);
     }

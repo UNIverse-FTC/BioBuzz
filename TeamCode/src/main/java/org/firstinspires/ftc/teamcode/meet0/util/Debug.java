@@ -11,17 +11,28 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Debug {
 
     public static Telemetry telemetry;
+    public static FieldManager panelsField;
+
 
     public static void init(Telemetry telemetryRef) {
         telemetry = telemetryRef;
+
+        panelsField = PanelsField.INSTANCE.getField();
+        panelsField.setOffsets(new FieldPresetParams("UNIverse", -72, -72, CanvasRotation.DEG_90, false, true, false));
     }
     public static void updateRobot(Pose robotPose) {
-        FieldManager panelsField = PanelsField.INSTANCE.getField();
 
         panelsField.moveCursor(robotPose.x(), robotPose.y());
         panelsField.setCursorHeading(Math.toDegrees(robotPose.heading()));
         panelsField.rect(10,10);
-        panelsField.setOffsets(new FieldPresetParams("UNIverse", -72, -72, CanvasRotation.DEG_90, false, true, false));
+    }
+
+    public  static void updateActiveHive(Pose hivePosition) {
+        panelsField.moveCursor(hivePosition.x(), hivePosition.y());
+        panelsField.rect(10, 20);
+    }
+    public  static void update() {
         panelsField.update();
+        telemetry.update();
     }
 }

@@ -59,7 +59,7 @@ public class Teleop extends LinearOpMode {
             boolean rightOnCurrent = gamepad1.b;
             boolean hoodCurrent = gamepad1.x;
 
-            boolean aimCurrent = gamepad1.left_trigger_pressed;
+
 
 
 
@@ -73,15 +73,12 @@ public class Teleop extends LinearOpMode {
             if(hoodCurrent && !hoodLast) {
                 hood = !hood;
             }
-            if(aimCurrent && !aimLast) {
-                aim = !aim;
-            }
+
 
 
             leftOnLast = leftOnCurrent;
             rightOnLast = rightOnCurrent;
             hoodLast = hoodCurrent;
-            aimLast = aimCurrent;
 
 
 //            if (!leftOn) {
@@ -103,7 +100,7 @@ public class Teleop extends LinearOpMode {
 //                launcher.shooterLeft.setHood(HoodState.POLLEN);
 //            }
 
-            if (aim) {
+            if (gamepad1.left_trigger_pressed) {
                 drivetrain.aim(true);
             }
             else {
@@ -116,7 +113,7 @@ public class Teleop extends LinearOpMode {
 
 //
 //            launcher.update();
-            telemetry.update();
+            Debug.update();
         }
     }
 

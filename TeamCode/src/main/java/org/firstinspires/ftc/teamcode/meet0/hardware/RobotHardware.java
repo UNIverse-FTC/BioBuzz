@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.meet0.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.hardware.ServoEx;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
@@ -24,10 +25,13 @@ public class RobotHardware {
     public ServoEx hoodServo;
 
     public CustomPID intakePID;
+
+    public VoltageSensor voltage;
     private void init(HardwareMap hardwareMap) {
 
         this.hardwareMap = hardwareMap;
 
+        voltage = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
         frontLeft = new MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_312);
         frontLeft.setInverted(true);
@@ -69,4 +73,5 @@ public class RobotHardware {
                 Constants.Intake.pv
         );
     }
+
 }

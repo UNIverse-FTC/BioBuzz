@@ -18,7 +18,11 @@ public class Constants {
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;
 
-    public static Pose HIVE_POSITION = new Pose(58, 58, 0);
+    public static Pose RED_HIVE_SOUTH = new Pose(58, 58, 0);
+    public static Pose RED_HIVE_NORTH = new Pose(58, 88, 0);
+
+    public static Pose BLUE_HIVE_SOUTH = new Pose(88, 58, 0);
+    public static Pose BLUE_HIVE_NORTH = new Pose(88, 88, 0);
 
 
 
@@ -37,15 +41,4 @@ public class Constants {
         public  static  double pv = 0.0;
     }
 
-    public  static class LUT
-    {
-        public  static  double[] lutValues = {
-                1.0, 0.0,
-                1.0, 0.0,
-                1.0, 0.0
-        };
-
-
-
-    }
 }
