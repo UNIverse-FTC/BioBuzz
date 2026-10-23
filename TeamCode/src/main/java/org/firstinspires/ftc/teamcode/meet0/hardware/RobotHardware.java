@@ -30,30 +30,33 @@ public class RobotHardware {
 
 
         frontLeft = new MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_312);
+        frontLeft.setInverted(true);
         frontRight = new MotorEx(hardwareMap, "frontRight", Motor.GoBILDA.RPM_312);
+        frontRight.setInverted(true);
         backLeft = new MotorEx(hardwareMap, "backLeft", Motor.GoBILDA.RPM_312);
+        backLeft.setInverted(true);
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
+        backRight.setInverted(true);
+//        hoodServo = new ServoEx(hardwareMap, "hoodServo");
+//
+//
+//        shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
+//        shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
+//
+//        shooter1.setRunMode(RunMode.VelocityControl);
+//        shooter2.setInverted(true);
+//        shooter2.setRunMode(RunMode.VelocityControl);
+//
+//        shooter1.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
+//        shooter1.setFeedforwardCoefficients(Constants.KS, Constants.KV);
+//
+//        shooter2.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
+//        shooter2.setFeedforwardCoefficients(Constants.KS, Constants.KV);
+//
+//
+//        intake = new MotorEx(hardwareMap, "intakeMotor", Motor.GoBILDA.BARE);
 
-        hoodServo = new ServoEx(hardwareMap, "hoodServo");
-
-
-        shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
-        shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
-
-        shooter1.setRunMode(RunMode.VelocityControl);
-        shooter2.setInverted(true);
-        shooter2.setRunMode(RunMode.VelocityControl);
-
-        shooter1.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-        shooter1.setFeedforwardCoefficients(Constants.KS, Constants.KV);
-
-        shooter2.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-        shooter2.setFeedforwardCoefficients(Constants.KS, Constants.KV);
-
-
-        intake = new MotorEx(hardwareMap, "intakeMotor", Motor.GoBILDA.BARE);
-
-        mecanum = new MecanumDrive(frontRight, frontLeft, backRight, backLeft);
+        mecanum = new MecanumDrive(frontLeft, backRight, backLeft, frontRight);
         mecanum.setRightSideInverted(true);
 
         intakePID = new CustomPID(

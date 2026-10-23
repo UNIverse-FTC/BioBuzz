@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.meet0.subsystems;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
+import com.pedropathing.paths.curves.Line;
+import com.pedropathing.paths.curves.bezier.BezierCurve;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
@@ -25,11 +28,12 @@ public class Drivetrain {
     public  void Drive(double lateral, double horizontal, double strafe)
     {
         if (!aiming) {
-            driveTrain.driveRobotCentric(strafe, lateral, horizontal);
-            follower.manual(strafe, lateral, horizontal);
+            driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+//            follower.manual(strafe, lateral, horizontal);
         }
-
+        follower.update();
         robotPosition = follower.pose();
+        Debug.telemetry.addLine("Pose: " + robotPosition.x() + " " +robotPosition.y());
         Debug.updateRobot(robotPosition);
     }
 
@@ -37,12 +41,16 @@ public class Drivetrain {
         if (active) {
             aiming = true;
             double xDistance = Constants.HIVE_POSITION.x() - robotPosition.x();
+            Debug.telemetry.addLine("X Distance: " + xDistance);
             double yDistance = Constants.HIVE_POSITION.y() - robotPosition.y();
+            Debug.telemetry.addLine("Y Distance: " + yDistance);
             double angleRads = Math.atan(xDistance / yDistance);
+            Debug.telemetry.addLine("Angle: " + Math.toDegrees(angleRads));
 
-            double aDistance = angleRads - robotPosition.heading();
-            double movement = (2 * Math.PI * Math.log(aDistance)) / 5.01511202135;
-            driveTrain.driveRobotCentric(0,0, movement);
+            Pose currentAnglePos = new Pose(follower.pose().x(), follower.pose().y(), follower.pose().heading());
+            Pose targetAnglePos = new Pose(follower.pose().x(), follower.pose().y(), angleRads);
+
+
         }
         else {
             aiming = false;

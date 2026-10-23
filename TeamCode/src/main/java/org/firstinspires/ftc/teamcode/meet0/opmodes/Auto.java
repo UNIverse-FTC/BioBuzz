@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
+import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
 @Autonomous(name = "<-- Autonomous ->")
 public class Auto extends LinearOpMode {
@@ -20,17 +21,17 @@ public class Auto extends LinearOpMode {
     {
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
-        Drivetrain drivetrain = new Drivetrain(robotHardware);
-        Launcher launcher = new Launcher(robotHardware);
-        Intake intake = new Intake(robotHardware);
+//        Launcher launcher = new Launcher(robotHardware);
+//        Intake intake = new Intake(robotHardware);
         PathExecutor pathExecutor = new PathExecutor(robotHardware);
+        pathExecutor.init();
+        Debug.init(telemetry);
         waitForStart();
 
-        pathExecutor.init(launcher);
+
         while (opModeIsActive()) {
             pathExecutor.update();
-            launcher.update();
-
+            telemetry.update();
         }
     }
 

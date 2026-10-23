@@ -7,7 +7,7 @@ import com.pedropathing.paths.Path;
 public class AutoSimple {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(56, 8, 90);
+    public final Pose start = poseFactory.of(56, 8, 90);
     private final Pose path1 = poseFactory.of(28, 10, 180);
     private final Pose point2 = poseFactory.of(10, 10, 225);
     private final Pose point3 = poseFactory.of(8, 7, -90);

@@ -11,9 +11,9 @@ public class Intake {
 
     MotorEx intakeMotor;
     CustomPID customPID;
-    public Intake(RobotHardware robotHardware, CustomPID intakePid) {
+    public Intake(RobotHardware robotHardware) {
         intakeMotor = robotHardware.intake;
-        customPID = intakePid;
+        customPID = robotHardware.intakePID;
     }
 
 

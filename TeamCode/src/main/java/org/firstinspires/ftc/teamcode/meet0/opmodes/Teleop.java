@@ -23,30 +23,11 @@ public class Teleop extends LinearOpMode {
 
     public void runOpMode()
     {
-        InterpLUT lut = new InterpLUT();
-        double[] lutValues = Constants.LUT.lutValues;
-        for (int i = 0; i < lutValues.length; i+=2)
-        {
-            lut.add(lutValues[i], lutValues[i+1]);
-        }
-        lut.createLUT();
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
-        Launcher launcher = new Launcher(robotHardware);
-
-
-
-        CustomPID intakePID = new CustomPID(
-                Constants.Intake.KP,
-                Constants.Intake.KI,
-                Constants.Intake.KD,
-                Constants.Intake.KV,
-                Constants.Intake.KS,
-                Constants.Intake.sp,
-                Constants.Intake.pv
-        );
-        Intake intake = new Intake(robotHardware, intakePID);
+//        Launcher launcher = new Launcher(robotHardware);
+//        Intake intake = new Intake(robotHardware);
 
 
 
@@ -67,12 +48,12 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
+//            telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
             drivetrain.Drive(
                     gamepad1.right_stick_x * 0.5,
                     gamepad1.left_stick_y * 0.5,
                     gamepad1.left_stick_x * 0.5);
-            intake.suck(gamepad1);
+//            intake.suck(gamepad1);
 
             boolean leftOnCurrent = gamepad1.a;
             boolean rightOnCurrent = gamepad1.b;
@@ -103,29 +84,24 @@ public class Teleop extends LinearOpMode {
             aimLast = aimCurrent;
 
 
-
-            if (!leftOn) {
-                launcher.shooterLeft.setRPM(0);
-            }
-            else {
-                launcher.shooterLeft.setRPM(Constants.SHOOTER_POWER);
-            }
-
-
-
-            if (!rightOn) {
-                launcher.shooterRight.setRPM(0);
-            }
-            else {
-                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
-            }
-
-            if (hood) {
-                launcher.shooterLeft.setHood(HoodState.NECTAR);
-            }
-            else {
-                launcher.shooterLeft.setHood(HoodState.POLLEN);
-            }
+//            if (!leftOn) {
+//                launcher.shooterLeft.setRPM(0);
+//            } else {
+//                launcher.shooterLeft.setRPM(Constants.SHOOTER_POWER);
+//            }
+//
+//
+//            if (!rightOn) {
+//                launcher.shooterRight.setRPM(0);
+//            } else {
+//                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
+//            }
+//
+//            if (hood) {
+//                launcher.shooterLeft.setHood(HoodState.NECTAR);
+//            } else {
+//                launcher.shooterLeft.setHood(HoodState.POLLEN);
+//            }
 
             if (aim) {
                 drivetrain.aim(true);
@@ -138,8 +114,8 @@ public class Teleop extends LinearOpMode {
             telemetry.addLine("rightOn: " + rightOn);
             telemetry.addLine("hood: " + hood);
 
-
-            launcher.update();
+//
+//            launcher.update();
             telemetry.update();
         }
     }
