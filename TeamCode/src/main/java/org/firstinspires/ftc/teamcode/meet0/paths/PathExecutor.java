@@ -68,8 +68,7 @@ public class PathExecutor {
                     follower.follow(paths.path5());
                     pathTimer.reset();
                     pathState++;
-                    break;
-                }
+                    break;                }
         }
     }
 }
