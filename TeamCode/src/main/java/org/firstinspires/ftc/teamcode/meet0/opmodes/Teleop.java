@@ -50,8 +50,10 @@ public class Teleop extends LinearOpMode {
         boolean speedmode = false;
 
         boolean prev_gamepad2_a = false;
-
+        boolean prev_gamepad_b = false;
         double speed = 1;
+
+        boolean aim_override = false;
 
         while (opModeIsActive()) {
 
@@ -72,9 +74,12 @@ public class Teleop extends LinearOpMode {
             if (gamepad2.a && !prev_gamepad2_a) {
                 drivetrain.resetPos();
             }
-
+            if(!prev_gamepad_b && gamepad1.b)
+            {
+                aim_override = !aim_override;
+            }
             prev_gamepad2_a = gamepad2.a;
-
+            prev_gamepad_b = gamepad1.b;
             if(leftOnCurrent && !leftOnLast) {
                 leftOn = !leftOn;
             }
@@ -143,7 +148,8 @@ public class Teleop extends LinearOpMode {
 //                launcher.shooterLeft.setHood(HoodState.POLLEN);
 //            }
             //FANCIER SHOOTING?
-            if (gamepad1.left_trigger_pressed) {
+            //If odometry working override, shoot with aiming
+            if (gamepad1.left_trigger_pressed && !aim_override) {
                 drivetrain.aim(true);
                 launcher.shooterLeft.shoot(drivetrain.calculateDistance());
                 launcher.shooterRight.shoot(drivetrain.calculateDistance());
@@ -156,7 +162,21 @@ public class Teleop extends LinearOpMode {
                     intake.suck(false);
                 }
             }
-            else {
+            //if odometry fails, shoot without aiming
+            else if(gamepad1.left_trigger_pressed && aim_override){
+
+                drivetrain.aim(false);
+                launcher.shooterRight.setRPM(Constants.FALLBACK_POWER);
+                launcher.shooterLeft.setRPM(Constants.FALLBACK_POWER);
+                if (gamepad1.right_trigger_pressed) {
+                    intake.suck(true);
+                }
+                else {
+                    intake.suck(false);
+                }
+            }
+            else
+            {
                 drivetrain.aim(false);
                 launcher.shooterRight.setRPM(0);
                 launcher.shooterLeft.setRPM(0);
@@ -164,12 +184,14 @@ public class Teleop extends LinearOpMode {
 
             telemetry.addLine("leftOn: " + leftOn);
             telemetry.addLine("hood: " + hood);
-
+            telemetry.addLine("aim override: " + aim_override);
 //
             launcher.update();
             intake.update();
             Debug.update();
         }
+
+
     }
 
 }
