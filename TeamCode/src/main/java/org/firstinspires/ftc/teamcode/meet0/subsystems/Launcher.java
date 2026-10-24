@@ -72,7 +72,7 @@ public class Launcher {
             targetRPM2 = targetRPM;
         }
 
-        public void launch(double distance) {
+        public void shoot(double distance) {
             if (hoodState == HoodState.NECTAR) {
                 this.setRPM(nectarLUT.get(distance));
             }
@@ -117,7 +117,7 @@ public class Launcher {
         public double getRPM() {
             return  RPM1;
         }
-        public void launch(double distance) {
+        public void shoot(double distance) {
             this.setRPM(pollenLUT.get(distance));
         }
         public LauncherState getLauncherState() {

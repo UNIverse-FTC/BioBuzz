@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.meet0.subsystems;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
-import com.pedropathing.paths.Path;
-import com.pedropathing.paths.curves.Line;
-import com.pedropathing.paths.curves.bezier.BezierCurve;
+
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.meet0.opmodes.OpModeStorage;
+import org.firstinspires.ftc.teamcode.meet0.paths.AutoSimple;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
@@ -22,23 +22,28 @@ public class Drivetrain {
     public Follower follower;
     private Pose robotPosition;
     private boolean aiming = false;
-
+    private double xDistance;
+    private double yDistance;
     private CustomPID aimPID;
-
+    private double angleRads;
     private double rotationAim = 0;
+    Pose hivePosition;
 
     public Drivetrain(RobotHardware hardware){
+
         driveTrain = hardware.mecanum;
         follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
         aimPID = new CustomPID(
-                1.5,
+                2.0,
                 0,
+                0.67,
                 0,
-                1.0,
                 0,
                 0,
                 0
         );
+
+        follower.setPose(OpModeStorage.autonomousEndPose);
     }
 
     public  void Drive(double lateral, double horizontal, double strafe)
@@ -48,16 +53,31 @@ public class Drivetrain {
 //            follower.manual(strafe, lateral, horizontal);
         }
         else {
-            driveTrain.driveRobotCentric(strafe, rotationAim, horizontal);
+            if (hivePosition.y() > 72) {
+                if (robotPosition.y() <= hivePosition.y() + 5) {
+                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+                }
+                else {
+                    driveTrain.driveRobotCentric(strafe, rotationAim, -horizontal);
+                }
+            }
+            else {
+                if (robotPosition.y() >= hivePosition.y() - 5) {
+                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+                }
+                else {
+                    driveTrain.driveRobotCentric(strafe, rotationAim, -horizontal);
+                }
+            }
         }
         follower.update();
         robotPosition = follower.pose();
-        Debug.telemetry.addLine("Pose: " + robotPosition.x() + " " +robotPosition.y());
-        Debug.updateRobot(robotPosition);
+        Debug.updateRobot(robotPosition, angleRads);
+        Debug.telemetry.addLine("Robot Heading: " + Math.round(Math.toDegrees(robotPosition.heading())));
+
     }
 
     public void aim(boolean active) {
-        Pose hivePosition;
         if (active) {
             aiming = true;
             if (robotPosition.x() < 72) {
@@ -79,12 +99,12 @@ public class Drivetrain {
 
             Debug.updateActiveHive(hivePosition);
 
-            double xDistance = hivePosition.x() - robotPosition.x();
-            Debug.telemetry.addLine("X Distance: " + xDistance);
-            double yDistance = hivePosition.y() - robotPosition.y();
-            Debug.telemetry.addLine("Y Distance: " + yDistance);
-            double angleRads = Math.atan(xDistance / yDistance);
-            Debug.telemetry.addLine("Angle: " + Math.toDegrees(angleRads));
+            xDistance = robotPosition.x() - hivePosition.x();
+//            Debug.telemetry.addLine("X Distance: " + xDistance);
+            yDistance = hivePosition.y() - robotPosition.y();
+//            Debug.telemetry.addLine("Y Distance: " + yDistance);
+            angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2);
+            Debug.telemetry.addLine("Target Angle: ");
 
 
             rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
@@ -95,5 +115,12 @@ public class Drivetrain {
         }
     }
 
+    public double calculateDistance() {
+        return Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+    }
+
+    public void resetPos() {
+        follower.setPose(new Pose(56, 8, Math.toRadians(90)));
+    }
 
 }

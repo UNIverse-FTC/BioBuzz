@@ -44,21 +44,26 @@ public class RobotHardware {
 //        hoodServo = new ServoEx(hardwareMap, "hoodServo");
 //
 //
-//        shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
-//        shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
+        shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
+        shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
+
+        shooter1.setRunMode(RunMode.VelocityControl);
+        shooter2.setInverted(true);
+        shooter2.setRunMode(RunMode.VelocityControl);
+
+        shooter1.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
+        shooter1.setFeedforwardCoefficients(Constants.KS, Constants.KV);
+
+        shooter2.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
+        shooter2.setFeedforwardCoefficients(Constants.KS, Constants.KV);
 //
-//        shooter1.setRunMode(RunMode.VelocityControl);
-//        shooter2.setInverted(true);
-//        shooter2.setRunMode(RunMode.VelocityControl);
 //
-//        shooter1.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-//        shooter1.setFeedforwardCoefficients(Constants.KS, Constants.KV);
-//
-//        shooter2.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-//        shooter2.setFeedforwardCoefficients(Constants.KS, Constants.KV);
-//
-//
-//        intake = new MotorEx(hardwareMap, "intakeMotor", Motor.GoBILDA.BARE);
+        intake = new MotorEx(hardwareMap, "intakeMotor", Motor.GoBILDA.RPM_435);
+
+        intake.setRunMode(RunMode.VelocityControl);
+
+        intake.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
+        intake.setFeedforwardCoefficients(Constants.KS, Constants.KV);
 
         mecanum = new MecanumDrive(frontLeft, backRight, backLeft, frontRight);
         mecanum.setRightSideInverted(true);

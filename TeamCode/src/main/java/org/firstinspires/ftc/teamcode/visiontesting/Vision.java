@@ -24,6 +24,7 @@ import org.opencv.core.Scalar;
 
 
 import java.util.List;
+@Disabled
 @Configurable
 @TeleOp(name = "Vision Test", group = "Tests")
 public class Vision extends LinearOpMode {
