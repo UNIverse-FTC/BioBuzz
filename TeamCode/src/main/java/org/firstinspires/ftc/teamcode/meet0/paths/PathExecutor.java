@@ -29,10 +29,10 @@ public class PathExecutor {
     public PathExecutor(RobotHardware robotHardware) {
         this.hardwareMap = robotHardware.hardwareMap;
     }
-    public void init(Launcher launcher, Intake intake, LinearOpMode opMode) {
+    public void init(Launcher launcher, Intake intake, LinearOpMode opMode, int alliance) {
         pathState = 0;
         follower = Constants.create(hardwareMap);
-        paths = new AutoSimple();
+        paths = new AutoSimple(alliance);
         follower.setPose(paths.start);
         this.launcher = launcher;
         this.opMode = opMode;

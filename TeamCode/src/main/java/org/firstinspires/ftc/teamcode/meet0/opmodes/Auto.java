@@ -24,8 +24,43 @@ public class Auto extends LinearOpMode {
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
         PathExecutor pathExecutor = new PathExecutor(robotHardware);
-        pathExecutor.init(launcher, intake,this);
         Debug.init(telemetry);
+
+        boolean previous_a = false;
+        boolean previous_b = false;
+
+        int selected_alliance = 0;
+        while (opModeInInit()){
+
+            String alliance = "none??";
+
+            switch (selected_alliance) {
+                case (0):
+                    alliance = "A alliance";
+                    break;
+                case (1):
+                    alliance = "B alliance";
+                    break;
+            }
+            Debug.telemetry.addLine("A for red, B for blue");
+            Debug.telemetry.addLine("Selected " + alliance);
+
+            if (gamepad1.a && !previous_a) {
+                if (selected_alliance == 1) {
+                    selected_alliance = 0;
+                }
+            }
+            if (gamepad1.b && !previous_b) {
+                if (selected_alliance == 0) {
+                    selected_alliance = 1;
+                }
+            }
+            previous_a = gamepad1.a;
+            previous_b = gamepad1.b;
+            Debug.update();
+        }
+
+        pathExecutor.init(launcher, intake,this, selected_alliance);
 
         waitForStart();
 
@@ -33,8 +68,8 @@ public class Auto extends LinearOpMode {
         while (opModeIsActive()) {
             pathExecutor.update();
             Debug.update();
-intake.update();
-launcher.update();
+            intake.update();
+            launcher.update();
         }
 
         OpModeStorage.autonomousEndPose = pathExecutor.follower.pose();
