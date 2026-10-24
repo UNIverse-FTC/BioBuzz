@@ -7,7 +7,7 @@ import com.seattlesolvers.solverslib.util.InterpLUT;
 public class Constants {
 
     public static double SHOOTER_POWER = 2500;
-
+    public  static  double FALLBACK_POWER = 2000;
     public static double KP = 1.5;
     public static double KI = 0.0;
     public static double KD = 0.0;
@@ -41,4 +41,18 @@ public class Constants {
         public  static  double pv = 0.0;
     }
 
+    public static class LUTValues
+    {
+        public  static  double[] nectarLUT =
+                {
+                        1, 0,
+                        1, 0
+                };
+
+        public  static  double[] pollenLUT =
+                {
+                        1, 0,
+                        1, 0
+                };
+    }
 }
