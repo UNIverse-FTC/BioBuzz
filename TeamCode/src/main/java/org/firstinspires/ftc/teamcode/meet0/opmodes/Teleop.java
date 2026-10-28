@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
+import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button.*;
+import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Type.*;
+
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
@@ -15,6 +18,8 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.EnhancedButton;
+
 
 import com.seattlesolvers.solverslib.util.InterpLUT;
 @TeleOp(name="\uD83C\uDFAE TeleOp")
@@ -37,7 +42,7 @@ public class Teleop extends LinearOpMode {
         boolean previous_a = false;
         boolean previous_b = false;
         while (opModeInInit()) {
-            String alliance = "none??";
+            String alliance = "none?? how did we get here?";
 
             switch (selected_alliance) {
                 case (0):
@@ -91,6 +96,10 @@ public class Teleop extends LinearOpMode {
 
         boolean aim_override = false;
 
+        EnhancedButton shooterBackup = new EnhancedButton(gamepad2, A, TRIGGER);
+        EnhancedButton manualSpeedUp = new EnhancedButton(gamepad2, DPAD_UP, ONCE);
+        EnhancedButton manualSpeedDown = new EnhancedButton(gamepad2, DPAD_DOWN, ONCE);
+
         while (opModeIsActive()) {
 
 //            telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
@@ -103,13 +112,13 @@ public class Teleop extends LinearOpMode {
             boolean hoodCurrent = gamepad2.x;
             boolean intakeCurrent = gamepad2.right_trigger_pressed;
             boolean speedmodeCurrent = gamepad1.left_bumper;
-            if (gamepad2.dpad_up && !previous_dpad_up) {
+
+            if (manualSpeedUp.get()) {
                 fallBackSpeed += 20;
             }
-            if (gamepad2.dpad_down && !previous_dpad_down) {
-                    fallBackSpeed -= 20;
+            if (manualSpeedDown.get()) {
+                fallBackSpeed -= 20;
             }
-
 
 
             Debug.telemetry.addLine("Adjusted Speed: "  + fallBackSpeed);
