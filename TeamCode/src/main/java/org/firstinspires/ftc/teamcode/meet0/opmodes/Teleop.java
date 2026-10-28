@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
-import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button.*;
+import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ButtonType.*;
 import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Type.*;
 
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
@@ -9,19 +9,16 @@ import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
-import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
-import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
-import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.EnhancedButton;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Buttonf;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.IdempotentButton;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
-
-import com.seattlesolvers.solverslib.util.InterpLUT;
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
 
@@ -96,9 +93,11 @@ public class Teleop extends LinearOpMode {
 
         boolean aim_override = false;
 
-        EnhancedButton shooterBackup = new EnhancedButton(gamepad2, A, TRIGGER);
-        EnhancedButton manualSpeedUp = new EnhancedButton(gamepad2, DPAD_UP, ONCE);
-        EnhancedButton manualSpeedDown = new EnhancedButton(gamepad2, DPAD_DOWN, ONCE);
+
+
+        Button shooterBackup = new ToggleButton(gamepad2, A);
+        Button manualSpeedUp = new IdempotentButton(gamepad2, DPAD_UP);
+        Button manualSpeedDown = new IdempotentButton(gamepad2, DPAD_DOWN);
 
         while (opModeIsActive()) {
 

@@ -1,25 +1,23 @@
 package org.firstinspires.ftc.teamcode.meet0.util.enhancedinput;
 
-import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button.*;
-
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class EnhancedButton {
+public class Buttonf {
 
     private final Gamepad gamepad;
-    private final Button button;
+    private final ButtonType button;
     private Type type;
 
     private boolean previousButton = false;
-    public EnhancedButton(Gamepad gamepad, Button button, Type type) {
+    public Buttonf(Gamepad gamepad, ButtonType button, Type type) {
         this.gamepad = gamepad;
         this.button = button;
         this.type = type;
     }
+    boolean returnVal = false;
 
     public boolean get() {
         boolean currentButton = updateButton();
-        boolean returnVal = false;
         switch (type) {
             case ONCE:
                 if (currentButton && !previousButton){
@@ -30,7 +28,6 @@ public class EnhancedButton {
                 }
                 previousButton = updateButton();
                 return returnVal;
-
             case TRIGGER:
                 if (currentButton && !previousButton) {
                     returnVal = !returnVal;
