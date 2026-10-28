@@ -22,10 +22,18 @@ public class Intake {
     }
 
 
-    public void suck(boolean active)
+    public void suck(boolean active, boolean forward)
     {
+
+
         if (active) {
-            targetRPM = 400;
+            if (forward) {
+
+                targetRPM = 400;
+            }
+            else {
+                targetRPM = -400;
+            }
         }
         else {
             targetRPM = 0;
@@ -38,7 +46,7 @@ public class Intake {
         intakeMotor.set(targetRPM / (435 * 0.9));
         RPM = intakeMotor.getCorrectedVelocity() / intakeMotor.getCPR() * 60;
 
-        Debug.telemetry.addLine("Intake RPM: " + RPM);
+        Debug.telemetry.addLine("Target RPM: " + targetRPM);
 //        ready1 = Math.abs(RPM - targetRPM) < 100;
     }
 

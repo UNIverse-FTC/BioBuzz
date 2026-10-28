@@ -32,11 +32,47 @@ public class Teleop extends LinearOpMode {
 
 
         Debug.init(telemetry);
+
+        int selected_alliance = 0;
+        boolean previous_a = false;
+        boolean previous_b = false;
+        while (opModeInInit()) {
+            String alliance = "none??";
+
+            switch (selected_alliance) {
+                case (0):
+                    alliance = "A alliance";
+                    break;
+                case (1):
+                    alliance = "B alliance";
+                    break;
+            }
+            Debug.telemetry.addLine("A for red, B for blue");
+            Debug.telemetry.addLine("Selected " + alliance);
+
+            if (gamepad1.a && !previous_a) {
+                if (selected_alliance == 1) {
+                    selected_alliance = 0;
+                }
+            }
+            if (gamepad1.b && !previous_b) {
+                if (selected_alliance == 0) {
+                    selected_alliance = 1;
+                }
+            }
+            previous_a = gamepad1.a;
+            previous_b = gamepad1.b;
+            Debug.update();
+        }
         waitForStart();
 
+        drivetrain.initLoc(selected_alliance);
+
+        double fallBackSpeed = 2740;
         boolean leftOnLast = false;
         boolean leftOn = false;
-
+        boolean previous_dpad_up = false;
+        boolean previous_dpad_down = false;
 //        boolean rightOnLast = false;
 //        boolean rightOn = false;
 
@@ -59,14 +95,37 @@ public class Teleop extends LinearOpMode {
 
 //            telemetry.addLine("Servo Position: " + robotHardware.hoodServo.getRawPosition());
             drivetrain.Drive(
-                    gamepad1.right_stick_x * speed,
+                    gamepad1.right_stick_x * speed * 0.7,
                     gamepad1.left_stick_y * speed,
                     gamepad1.left_stick_x * speed);
-            boolean leftOnCurrent = gamepad1.a;
+            boolean leftOnCurrent = gamepad2.left_trigger_pressed;
             boolean rightOnCurrent = gamepad1.b;
-            boolean hoodCurrent = gamepad1.x;
-            boolean intakeCurrent = gamepad1.right_bumper;
+            boolean hoodCurrent = gamepad2.x;
+            boolean intakeCurrent = gamepad2.right_trigger_pressed;
             boolean speedmodeCurrent = gamepad1.left_bumper;
+            if (gamepad2.dpad_up && !previous_dpad_up) {
+                fallBackSpeed += 20;
+            }
+            if (gamepad2.dpad_down && !previous_dpad_down) {
+                    fallBackSpeed -= 20;
+            }
+
+
+
+            Debug.telemetry.addLine("Adjusted Speed: "  + fallBackSpeed);
+
+            if (gamepad1.a) {
+                intake.suck(true, true);
+            }
+            else {
+                if (gamepad1.b) {
+                    intake.suck(true, false);
+                }
+                else {
+                    intake.suck(false, false);
+                }
+            }
+
 
 
 
@@ -74,7 +133,7 @@ public class Teleop extends LinearOpMode {
             if (gamepad2.a && !prev_gamepad2_a) {
                 drivetrain.resetPos();
             }
-            if(!prev_gamepad_b && gamepad1.b)
+            if(!prev_gamepad_b && gamepad2.b)
             {
                 aim_override = !aim_override;
             }
@@ -135,44 +194,45 @@ public class Teleop extends LinearOpMode {
 //            } else {
 //                launcher.shooterRight.setRPM(Constants.SHOOTER_POWER);
 //            }
-            if (!intakeActive) {
-                intake.suck(false);
-            } else {
-                intake.suck(true);
-            }
-
-
-//            if (hood) {
-//                launcher.shooterLeft.setHood(HoodState.NECTAR);
+//            if (!intakeActive) {
+//                intake.suck(false, true);
 //            } else {
-//                launcher.shooterLeft.setHood(HoodState.POLLEN);
+//                intake.suck(true, true);
 //            }
+
+            Debug.telemetry.addLine("Distance: " + drivetrain.calculateDistance());
+
+            if (hood) {
+                launcher.shooterLeft.setHood(HoodState.NECTAR);
+            } else {
+                launcher.shooterLeft.setHood(HoodState.POLLEN);
+            }
             //FANCIER SHOOTING?
             //If odometry working override, shoot with aiming
             if (gamepad1.left_trigger_pressed && !aim_override) {
-                drivetrain.aim(true);
-                launcher.shooterLeft.shoot(drivetrain.calculateDistance());
-                launcher.shooterRight.shoot(drivetrain.calculateDistance());
+                drivetrain.aim(false);
+                launcher.shooterLeft.shoot(fallBackSpeed);
+                launcher.shooterRight.shoot(fallBackSpeed);
 
-//                Debug.telemetry.addLine("Distance: " + drivetrain.calculateDistance());
+//                Debug.telemetry.addLine("Distance: " + drivetraitruen.calculateDistance());
                 if (gamepad1.right_trigger_pressed) {
-                   intake.suck(true);
+                   intake.suck(true, true);
                 }
                 else {
-                    intake.suck(false);
+                    intake.suck(false, true);
                 }
             }
             //if odometry fails, shoot without aiming
-            else if(gamepad1.left_trigger_pressed && aim_override){
+            else if(gamepad2.left_trigger_pressed && aim_override){
 
                 drivetrain.aim(false);
-                launcher.shooterRight.setRPM(Constants.FALLBACK_POWER);
-                launcher.shooterLeft.setRPM(Constants.FALLBACK_POWER);
-                if (gamepad1.right_trigger_pressed) {
-                    intake.suck(true);
+                launcher.shooterRight.setRPM(fallBackSpeed);
+                launcher.shooterLeft.setRPM(fallBackSpeed);
+                if (gamepad2.right_trigger_pressed) {
+                    intake.suck(true, true);
                 }
                 else {
-                    intake.suck(false);
+                    intake.suck(false, true);
                 }
             }
             else
@@ -185,7 +245,8 @@ public class Teleop extends LinearOpMode {
             telemetry.addLine("leftOn: " + leftOn);
             telemetry.addLine("hood: " + hood);
             telemetry.addLine("aim override: " + aim_override);
-//
+            previous_dpad_up = gamepad2.dpad_up;
+            previous_dpad_down = gamepad2.dpad_down;
             launcher.update();
             intake.update();
             Debug.update();

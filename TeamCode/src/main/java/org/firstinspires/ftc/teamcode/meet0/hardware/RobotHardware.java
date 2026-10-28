@@ -41,7 +41,7 @@ public class RobotHardware {
         backLeft.setInverted(true);
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
         backRight.setInverted(true);
-//        hoodServo = new ServoEx(hardwareMap, "hoodServo");
+        hoodServo = new ServoEx(hardwareMap, "hoodServo");
 //
 //
         shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);

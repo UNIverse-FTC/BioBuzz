@@ -9,7 +9,7 @@ public class AutoSimple {
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    public final Pose start = poseFactory.of(56, 8, 90);
+    public final Pose start = poseFactory.of(56, 8, 270);
     private final Pose path1 = poseFactory.of(28, 10, 180);
     private final Pose point2 = poseFactory.of(15, 10, 225);
     private final Pose point3 = poseFactory.of(13, 8, -90);

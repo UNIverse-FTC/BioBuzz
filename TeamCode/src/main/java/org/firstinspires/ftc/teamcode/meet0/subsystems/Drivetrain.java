@@ -29,7 +29,7 @@ public class Drivetrain {
     private double rotationAim = 0;
     Pose hivePosition;
 
-    public Drivetrain(RobotHardware hardware){
+    public Drivetrain(RobotHardware hardware) {
 
         driveTrain = hardware.mecanum;
         follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
@@ -43,7 +43,19 @@ public class Drivetrain {
                 0
         );
 
-        follower.setPose(OpModeStorage.autonomousEndPose);
+    }
+    public void initLoc(int Selected) {
+
+//        if (Selected == 0) {
+            follower.setPose(OpModeStorage.autonomousEndPose);
+
+//        }
+//        else {
+//            if (OpModeStorage.autonomousEndPose ==)
+//            follower.setPose(new Pose((double)2.0F * 0 - 56, 8, Math.PI - Math.toRadians(270)));
+//
+//        }
+
     }
 
     public  void Drive(double lateral, double horizontal, double strafe)
@@ -103,7 +115,7 @@ public class Drivetrain {
 //            Debug.telemetry.addLine("X Distance: " + xDistance);
             yDistance = hivePosition.y() - robotPosition.y();
 //            Debug.telemetry.addLine("Y Distance: " + yDistance);
-            angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2);
+            angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2) + Math.PI;
             Debug.telemetry.addLine("Target Angle: ");
 
 

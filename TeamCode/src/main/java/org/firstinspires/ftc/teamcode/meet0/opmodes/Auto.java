@@ -60,9 +60,9 @@ public class Auto extends LinearOpMode {
             Debug.update();
         }
 
-        pathExecutor.init(launcher, intake,this, selected_alliance);
 
         waitForStart();
+        pathExecutor.init(launcher, intake,this, selected_alliance);
 
 
         while (opModeIsActive()) {

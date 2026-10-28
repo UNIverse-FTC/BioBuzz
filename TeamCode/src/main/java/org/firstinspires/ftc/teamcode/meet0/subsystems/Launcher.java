@@ -135,9 +135,12 @@ public class Launcher {
         }
     }
     private void initLUTs() {
-        nectarLUT.add(1, 3);
+        nectarLUT.add(0, 2800);
+        nectarLUT.add(1000, 2800);
         //this continues
-        pollenLUT.add(1,3);
+        pollenLUT.add(0,2800);
+
+        pollenLUT.add(1000,2800);
         //same here
     }
 }

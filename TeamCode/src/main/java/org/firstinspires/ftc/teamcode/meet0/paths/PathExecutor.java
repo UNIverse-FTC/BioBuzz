@@ -47,10 +47,10 @@ public class PathExecutor {
         Debug.telemetry.addLine("Path State: " + pathState);
         switch (pathState) {
             case(0):
-                launcher.shooterLeft.setRPM(2000);
-                launcher.shooterRight.setRPM(2000);
+                launcher.shooterLeft.setRPM(2800);
+                launcher.shooterRight.setRPM(2800);
                 if (launcher.shooterLeft.getLauncherState() == LauncherState.READY && launcher.shooterRight.getLauncherState() == LauncherState.READY) {
-                    intake.suck(true);
+                    intake.suck(true, true);
                     launchTimer.reset();
                     pathState++;
                 }
@@ -60,7 +60,7 @@ public class PathExecutor {
                 if (launchTimer.seconds() >= 1.5) {
                     launcher.shooterLeft.setRPM(0);
                     launcher.shooterRight.setRPM(0);
-                    intake.suck(false);
+                    intake.suck(false, true);
                     pathState++;
                 }
                 break;
@@ -70,7 +70,7 @@ public class PathExecutor {
                 break;
             case(3):
                 if (!follower.isBusy()) {
-                    intake.suck(true);
+                    intake.suck(true,true);
                     follower.follow(paths.path2());
                     pathState++;
                 }
@@ -83,7 +83,7 @@ public class PathExecutor {
                 break;
             case(5):
                 if (!follower.isBusy()) {
-                    intake.suck(false);
+                    intake.suck(false, true);
                     follower.follow(paths.path4());
                     pathState++;
                 }
@@ -96,11 +96,11 @@ public class PathExecutor {
                 }
                 break;
             case(7):
-                launcher.shooterLeft.setRPM(2000);
-                launcher.shooterRight.setRPM(2000);
+                launcher.shooterLeft.setRPM(2800);
+                launcher.shooterRight.setRPM(2800);
                 if (!follower.isBusy()) {
                     if (launcher.shooterLeft.getLauncherState() == LauncherState.READY && launcher.shooterRight.getLauncherState() == LauncherState.READY) {
-                        intake.suck(true);
+                        intake.suck(true, true);
                         launchTimer.reset();
                         pathState++;
                     }
@@ -110,7 +110,7 @@ public class PathExecutor {
                 if (launchTimer.seconds() >= 1.5) {
                     launcher.shooterLeft.setRPM(0);
                     launcher.shooterRight.setRPM(0);
-                    intake.suck(false);
+                    intake.suck(false, true);
                     pathState++;
                 }
                 break;
