@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet0.opmodes;
 
 import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ButtonType.*;
-import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Type.*;
 
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
@@ -15,7 +14,6 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
-import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Buttonf;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.IdempotentButton;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
@@ -98,6 +96,7 @@ public class Teleop extends LinearOpMode {
         Button shooterBackup = new ToggleButton(gamepad2, A);
         Button manualSpeedUp = new IdempotentButton(gamepad2, DPAD_UP);
         Button manualSpeedDown = new IdempotentButton(gamepad2, DPAD_DOWN);
+        Button poseReset = new IdempotentButton(gamepad2, A);
 
         while (opModeIsActive()) {
 
@@ -138,7 +137,7 @@ public class Teleop extends LinearOpMode {
 
 
 
-            if (gamepad2.a && !prev_gamepad2_a) {
+            if (poseReset.get()) {
                 drivetrain.resetPos();
             }
             if(!prev_gamepad_b && gamepad2.b)
