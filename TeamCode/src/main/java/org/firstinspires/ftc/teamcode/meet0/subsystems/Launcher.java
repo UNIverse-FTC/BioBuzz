@@ -61,11 +61,6 @@ public class Launcher {
 
         Debug.debugPID(targetRPM1, RPM1, targetRPM2, RPM2);
 
-        Debug.telemetry.addLine("RPM1: " + RPM1);
-        Debug.telemetry.addLine("RPM2: " + RPM2);
-
-        Debug.telemetry.addLine("ready1? " + ready1);
-        Debug.telemetry.addLine("ready2? " + ready2);
 
     }
 
@@ -139,12 +134,16 @@ public class Launcher {
         }
     }
     private void initLUTs() {
-        nectarLUT.add(0, 2800);
+        nectarLUT.add(-1000, 2800);
         nectarLUT.add(1000, 2800);
+
+        nectarLUT.createLUT();
         //this continues
-        pollenLUT.add(0,2800);
+        pollenLUT.add(-1000,2800);
 
         pollenLUT.add(1000,2800);
+
+        pollenLUT.createLUT();
         //same here
     }
 }

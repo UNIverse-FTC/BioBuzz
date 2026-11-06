@@ -57,6 +57,6 @@ public class Debug {
     public  static void update() {
         panelsField.update();
         telemetry.update();
-        panelsTelemetry.update(telemetry);
+        panelsTelemetry.update();
     }
 }

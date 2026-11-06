@@ -62,8 +62,8 @@ public class RobotHardware {
 
         intake.setRunMode(RunMode.VelocityControl);
 
-        intake.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-        intake.setFeedforwardCoefficients(Constants.KS, Constants.KV);
+        intake.setVeloCoefficients(Constants.KP_intake,Constants.KI_intake,Constants.KD_intake);
+        intake.setFeedforwardCoefficients(Constants.KS_intake, Constants.KV_intake);
 
         mecanum = new MecanumDrive(frontLeft, backRight, backLeft, frontRight);
         mecanum.setRightSideInverted(true);

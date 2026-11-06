@@ -85,21 +85,17 @@ public class Teleop extends LinearOpMode {
 
 
 
-            if (gamepad1.a) {
+            if (gamepad1.right_bumper) {
                 intake.suck(true, true);
             }
             else {
-                if (gamepad1.b) {
-                    intake.suck(true, false);
-                }
-                else {
-                    intake.suck(false, false);
-                }
+                intake.suck(false, false);
             }
 
             if (poseReset.get()) {
                 drivetrain.resetPos();
             }
+            Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
 
 
             if (armShooter.get()) {
@@ -126,6 +122,7 @@ public class Teleop extends LinearOpMode {
 
 
             if (speedMode.get()) {
+                Debug.telemetry.addLine("SLOW MODE");
                 speed = 0.5;
 
             } else {

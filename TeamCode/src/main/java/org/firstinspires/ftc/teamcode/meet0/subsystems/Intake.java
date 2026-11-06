@@ -46,6 +46,9 @@ public class Intake {
         intakeMotor.set(targetRPM / (435 * 0.9));
         RPM = intakeMotor.getCorrectedVelocity() / intakeMotor.getCPR() * 60;
 
+        Debug.panelsTelemetry.addData("Intake Target", targetRPM);
+        Debug.panelsTelemetry.addData("Intake RPM", RPM);
+
         Debug.telemetry.addLine("Target RPM: " + targetRPM);
 //        ready1 = Math.abs(RPM - targetRPM) < 100;
     }

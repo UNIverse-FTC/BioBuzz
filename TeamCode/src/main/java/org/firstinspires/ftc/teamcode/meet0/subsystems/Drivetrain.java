@@ -86,7 +86,6 @@ public class Drivetrain {
         robotPosition = follower.pose();
         Debug.updateRobot(robotPosition, angleRads);
         Debug.telemetry.addLine("Robot Heading: " + Math.round(Math.toDegrees(robotPosition.heading())));
-        aiming = true;
         if (robotPosition.x() < 72) {
             if (robotPosition.y() < 72) {
                 hivePosition = Constants.RED_HIVE_SOUTH;
