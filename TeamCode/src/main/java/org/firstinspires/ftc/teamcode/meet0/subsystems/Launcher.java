@@ -64,47 +64,16 @@ public class Launcher {
 
     }
 
+    public void shoot(double distance) {
+        shooterLeft.setRPM(nectarLUT.get(distance));
+        shooterRight.setRPM(pollenLUT.get(distance));
+    }
     public class ShooterLeft {
-
-        public HoodState hoodState;
         public void setRPM(double targetRPM) {
             targetRPM2 = targetRPM;
         }
-
-        public void shoot(double distance) {
-            if (hoodState == HoodState.NECTAR) {
-                this.setRPM(nectarLUT.get(distance));
-            }
-            else {
-                this.setRPM(pollenLUT.get(distance));
-            }
-        }
         public double getRPM() {
             return  RPM2;
-        }
-
-        public LauncherState getLauncherState() {
-            if (ready2) {
-                if (RPM2 == 0 & targetRPM2 == 0) {
-                    launcherState2 = LauncherState.IDLE;
-                }
-                else {
-                    launcherState2 = LauncherState.READY;
-                }
-            } else {
-                launcherState2 = LauncherState.NOTREADY;
-            }
-            return launcherState2;
-        }
-
-        public void setHood(HoodState hoodState) {
-            this.hoodState = hoodState;
-            if (hoodState == HoodState.POLLEN) {
-                hoodServo.set(Constants.SERVO_POLLEN);
-            }
-            else {
-                hoodServo.set(Constants.SERVO_NECTAR);
-            }
         }
     }
 
@@ -112,25 +81,8 @@ public class Launcher {
         public void setRPM(double targetRPM) {
             targetRPM1 = targetRPM;
         }
-
         public double getRPM() {
             return  RPM1;
-        }
-        public void shoot(double distance) {
-            this.setRPM(pollenLUT.get(distance));
-        }
-        public LauncherState getLauncherState() {
-            if (ready1) {
-                if (RPM1 == 0 & targetRPM1 == 0) {
-                    launcherState1 = LauncherState.IDLE;
-                }
-                else {
-                    launcherState1 = LauncherState.READY;
-                }
-            } else {
-                launcherState1 = LauncherState.NOTREADY;
-            }
-            return launcherState1;
         }
     }
     private void initLUTs() {

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.meet0.util;
 
+import androidx.annotation.NonNull;
+
 import com.bylazar.field.CanvasRotation;
 import com.bylazar.field.FieldManager;
 import com.bylazar.field.FieldPresetParams;
@@ -39,18 +41,69 @@ public class Debug {
         panelsField.moveCursor(robotPose.x() - 5, robotPose.y() - 5);
         panelsField.setStyle(new Style("red", "red", 1.0));
 
-        panelsField.rect(10,10);
+        panelsField.rect(10, 10);
         panelsField.setStyle(new Style("red", "blue", 2.0));
         panelsField.moveCursor(robotPose.x(), robotPose.y());
         panelsField.line(robotPose.x() + 20 * Math.cos(robotPose.heading()), robotPose.y() + 20 * Math.sin(robotPose.heading()));
         panelsField.setStyle(new Style("red", "green", 2.0));
         panelsField.line(robotPose.x() + 20 * Math.cos(targetAngle), robotPose.y() + 20 * Math.sin(targetAngle));
 
+        String robotIcon = " ";
+
+        double adjustedHeading = Math.toDegrees(robotPose.heading());
+
+        int octant = (int) Math.round(adjustedHeading / 8);
+
+        switch (octant) {
+            case (0):
+                robotIcon = " →";
+                break;
+            case (1):
+                robotIcon = " ↗";
+                break;
+            case (2):
+                robotIcon = " ↑";
+                break;
+            case (3):
+                robotIcon = " ↖";
+                break;
+            case (4):
+                robotIcon = " ←";
+                break;
+            case (5):
+                robotIcon = " ↙";
+                break;
+            case (6):
+                robotIcon = " ↓";
+                break;
+            case (7):
+                robotIcon = " ↘";
+                break;
+            case (8):
+                robotIcon = " →";
+        }
+
+        int adjustedX = (int) Math.round(robotPose.x() / Constants.GRID_RES);
+        int adjustedY = (int) Math.round(robotPose.y() / Constants.GRID_RES);
+        for (int y = 144 / Constants.GRID_RES; y > 0; y--) {
+            StringBuilder line = new StringBuilder();
+            for (int x = 0; x < 144 / Constants.GRID_RES; x++){
+
+                    if (adjustedX == x && adjustedY == y) {
+                        line.append(robotIcon);
+                    }
+                    else {
+                        line.append(" .");
+                    }
+            }
+            telemetry.addLine(line.toString());
+        }
 
     }
 
 
-    public  static void updateActiveHive(Pose hivePosition) {
+
+    public  static void updateActiveHive(@NonNull Pose hivePosition) {
         panelsField.moveCursor(hivePosition.x(), hivePosition.y());
         panelsField.rect(10, 20);
     }

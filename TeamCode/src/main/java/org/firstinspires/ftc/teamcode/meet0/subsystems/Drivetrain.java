@@ -32,7 +32,10 @@ public class Drivetrain {
     public Drivetrain(RobotHardware hardware) {
 
         driveTrain = hardware.mecanum;
+
         follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
+        follower.setPose(OpModeStorage.autonomousEndPose);
+
         aimPID = new CustomPID(
                 2.0,
                 0,
@@ -44,25 +47,12 @@ public class Drivetrain {
         );
 
     }
-    public void initLoc(boolean Selected) {
 
-//        if (Selected == 0) {
-            follower.setPose(OpModeStorage.autonomousEndPose);
-
-//        }
-//        else {
-//            if (OpModeStorage.autonomousEndPose ==)
-//            follower.setPose(new Pose((double)2.0F * 0 - 56, 8, Math.PI - Math.toRadians(270)));
-//
-//        }
-
-    }
 
     public  void Drive(double lateral, double horizontal, double strafe)
     {
         if (!aiming) {
             driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
-//            follower.manual(strafe, lateral, horizontal);
         }
         else {
             if (hivePosition.y() > 72) {
@@ -82,10 +72,14 @@ public class Drivetrain {
                 }
             }
         }
+
         follower.update();
         robotPosition = follower.pose();
+
         Debug.updateRobot(robotPosition, angleRads);
         Debug.telemetry.addLine("Robot Heading: " + Math.round(Math.toDegrees(robotPosition.heading())));
+        Debug.panelsTelemetry.addData("Robot Heading", Math.round(Math.toDegrees(robotPosition.heading())));
+
         if (robotPosition.x() < 72) {
             if (robotPosition.y() < 72) {
                 hivePosition = Constants.RED_HIVE_SOUTH;
@@ -104,6 +98,7 @@ public class Drivetrain {
         }
 
         Debug.updateActiveHive(hivePosition);
+
         xDistance = robotPosition.x() - hivePosition.x();
         yDistance = hivePosition.y() - robotPosition.y();
 
@@ -114,9 +109,10 @@ public class Drivetrain {
             aiming = true;
 
             angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2) + Math.PI;
-            Debug.telemetry.addLine("Target Angle: ");
 
             rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
+
+            Debug.panelsTelemetry.addData("Target Heading", Math.toDegrees(rotationAim));
         }
         else {
             aiming = false;

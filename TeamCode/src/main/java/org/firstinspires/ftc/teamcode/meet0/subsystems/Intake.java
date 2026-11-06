@@ -22,23 +22,15 @@ public class Intake {
     }
 
 
-    public void suck(boolean active, boolean forward)
-    {
+    public void suck() {
+        targetRPM = 400;
+    }
+    public void eject() {
+        targetRPM = -400;
+    }
 
-
-        if (active) {
-            if (forward) {
-
-                targetRPM = 400;
-            }
-            else {
-                targetRPM = -400;
-            }
-        }
-        else {
-            targetRPM = 0;
-        }
-
+    public void stopSTOPSTOPITSTOP() {
+        targetRPM = 0;
     }
 
     public void update() {

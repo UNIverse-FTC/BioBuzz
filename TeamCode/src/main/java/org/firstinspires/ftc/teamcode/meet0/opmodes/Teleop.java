@@ -22,8 +22,7 @@ import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 public class Teleop extends LinearOpMode {
 
 
-    public void runOpMode()
-    {
+    public void runOpMode() {
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
@@ -32,40 +31,23 @@ public class Teleop extends LinearOpMode {
 
         Debug.init(telemetry);
 
-
-        Button selected_alliance = new FlipFlopButton(gamepad1, A, B);
         while (opModeInInit()) {
-            String alliance = "none?? how did we get here?";
 
-            if (selected_alliance.get()) {
-                alliance = "A alliance";
-            }
-            else {
-                alliance = "B alliance";
-            }
-            Debug.telemetry.addLine("A for red, B for blue");
-            Debug.telemetry.addLine("Selected " + alliance);
-
-            Debug.update();
         }
         waitForStart();
-
-        drivetrain.initLoc(selected_alliance.get());
 
         double fallBackSpeed = 2740;
         double speed = 1;
 
-        Button shooterBackup = new ToggleButton(gamepad2, A);
         Button manualSpeedUp = new IdempotentButton(gamepad2, DPAD_UP);
         Button manualSpeedDown = new IdempotentButton(gamepad2, DPAD_DOWN);
         Button poseReset = new IdempotentButton(gamepad2, A);
-
-        Button hood = new ToggleButton(gamepad1, X);
-        Button armShooter = new ToggleButton(gamepad1, A);
-
-        Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
-
         Button toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER);
+
+        Button armShooter = new ToggleButton(gamepad1, A);
+        Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
+        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
+
 
         while (opModeIsActive()) {
 
@@ -82,21 +64,24 @@ public class Teleop extends LinearOpMode {
                 fallBackSpeed -= 20;
             }
 
-
-
-
-            if (gamepad1.right_bumper) {
-                intake.suck(true, true);
+            if (toggleAim.get()) {
+                drivetrain.aim(true);
+                Debug.telemetry.addLine("AIMING ACTIVE");
             }
             else {
-                intake.suck(false, false);
+                drivetrain.aim(false);
+            }
+
+            if (gamepad1.right_bumper) {
+                intake.suck();
+            }
+            else {
+                intake.stopSTOPSTOPITSTOP();
             }
 
             if (poseReset.get()) {
                 drivetrain.resetPos();
             }
-            Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
-
 
             if (armShooter.get()) {
                 if (toggleOverride.get()) {
@@ -107,9 +92,7 @@ public class Teleop extends LinearOpMode {
                     Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
                 }
                 else {
-                    launcher.shooterLeft.shoot(drivetrain.calculateDistance());
-                    launcher.shooterRight.shoot(drivetrain.calculateDistance());
-
+                    launcher.shoot(drivetrain.calculateDistance());
                     Debug.telemetry.addLine("Shooter: ARMED - AUTO");
                 }
             }
@@ -119,7 +102,6 @@ public class Teleop extends LinearOpMode {
 
                 Debug.telemetry.addLine("Shooter: IDLE");
             }
-
 
             if (speedMode.get()) {
                 Debug.telemetry.addLine("SLOW MODE");
@@ -132,20 +114,9 @@ public class Teleop extends LinearOpMode {
 
             Debug.telemetry.addLine("Distance: " + drivetrain.calculateDistance());
 
-            if (hood.get()) {
-                launcher.shooterLeft.setHood(HoodState.NECTAR);
-            } else {
-                launcher.shooterLeft.setHood(HoodState.POLLEN);
-            }
-
-
-
             launcher.update();
             intake.update();
             Debug.update();
         }
-
-
     }
-
 }
