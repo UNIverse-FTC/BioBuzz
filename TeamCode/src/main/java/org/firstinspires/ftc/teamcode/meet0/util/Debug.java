@@ -5,6 +5,8 @@ import com.bylazar.field.FieldManager;
 import com.bylazar.field.FieldPresetParams;
 import com.bylazar.field.PanelsField;
 import com.bylazar.field.Style;
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,12 +16,23 @@ public class Debug {
     public static Telemetry telemetry;
     public static FieldManager panelsField;
 
+    public static TelemetryManager panelsTelemetry;
+
 
     public static void init(Telemetry telemetryRef) {
         telemetry = telemetryRef;
 
         panelsField = PanelsField.INSTANCE.getField();
+        panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
+
         panelsField.setOffsets(new FieldPresetParams("UNIverse", -72, -72, CanvasRotation.DEG_90, false, true, false));
+    }
+
+    public static void debugPID(double rightTarget, double rightCurrent, double leftTarget, double leftCurrent) {
+        panelsTelemetry.addData("Right Target", rightTarget);
+        panelsTelemetry.addData("Right Current", rightCurrent);
+        panelsTelemetry.addData("Left Target", leftTarget);
+        panelsTelemetry.addData("Left Target", leftCurrent);
     }
     public static void updateRobot(Pose robotPose, double targetAngle) {
 
@@ -33,7 +46,9 @@ public class Debug {
         panelsField.setStyle(new Style("red", "green", 2.0));
         panelsField.line(robotPose.x() + 20 * Math.cos(targetAngle), robotPose.y() + 20 * Math.sin(targetAngle));
 
+
     }
+
 
     public  static void updateActiveHive(Pose hivePosition) {
         panelsField.moveCursor(hivePosition.x(), hivePosition.y());
@@ -42,5 +57,6 @@ public class Debug {
     public  static void update() {
         panelsField.update();
         telemetry.update();
+        panelsTelemetry.update(telemetry);
     }
 }

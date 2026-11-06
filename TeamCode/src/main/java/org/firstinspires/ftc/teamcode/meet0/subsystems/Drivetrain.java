@@ -44,7 +44,7 @@ public class Drivetrain {
         );
 
     }
-    public void initLoc(int Selected) {
+    public void initLoc(boolean Selected) {
 
 //        if (Selected == 0) {
             follower.setPose(OpModeStorage.autonomousEndPose);
@@ -86,41 +86,38 @@ public class Drivetrain {
         robotPosition = follower.pose();
         Debug.updateRobot(robotPosition, angleRads);
         Debug.telemetry.addLine("Robot Heading: " + Math.round(Math.toDegrees(robotPosition.heading())));
+        aiming = true;
+        if (robotPosition.x() < 72) {
+            if (robotPosition.y() < 72) {
+                hivePosition = Constants.RED_HIVE_SOUTH;
+            }
+            else {
+                hivePosition = Constants.RED_HIVE_NORTH;
+            }
+        }
+        else {
+            if (robotPosition.y() < 72) {
+                hivePosition = Constants.BLUE_HIVE_SOUTH;
+            }
+            else {
+                hivePosition = Constants.BLUE_HIVE_NORTH;
+            }
+        }
+
+        Debug.updateActiveHive(hivePosition);
+        xDistance = robotPosition.x() - hivePosition.x();
+        yDistance = hivePosition.y() - robotPosition.y();
 
     }
 
     public void aim(boolean active) {
         if (active) {
             aiming = true;
-            if (robotPosition.x() < 72) {
-                if (robotPosition.y() < 72) {
-                    hivePosition = Constants.RED_HIVE_SOUTH;
-                }
-                else {
-                    hivePosition = Constants.RED_HIVE_NORTH;
-                }
-            }
-            else {
-                if (robotPosition.y() < 72) {
-                    hivePosition = Constants.BLUE_HIVE_SOUTH;
-                }
-                else {
-                    hivePosition = Constants.BLUE_HIVE_NORTH;
-                }
-            }
 
-            Debug.updateActiveHive(hivePosition);
-
-            xDistance = robotPosition.x() - hivePosition.x();
-//            Debug.telemetry.addLine("X Distance: " + xDistance);
-            yDistance = hivePosition.y() - robotPosition.y();
-//            Debug.telemetry.addLine("Y Distance: " + yDistance);
             angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2) + Math.PI;
             Debug.telemetry.addLine("Target Angle: ");
 
-
             rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
-
         }
         else {
             aiming = false;

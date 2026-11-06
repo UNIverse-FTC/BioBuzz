@@ -8,12 +8,12 @@ public class Constants {
 
     public static double SHOOTER_POWER = 2500;
     public  static  double FALLBACK_POWER = 2000;
-    public static double KP = 1.5;
+    public static double KP = 0.1;
     public static double KI = 0.0;
     public static double KD = 0.0;
 
     public static double KS = 0.0;
-    public static double KV = 1.075;
+    public static double KV = 0.0075;
 
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;

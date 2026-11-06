@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.LauncherState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
+import java.lang.annotation.Target;
+
 
 public class Launcher {
 
@@ -56,6 +58,8 @@ public class Launcher {
 
         ready1 = Math.abs(RPM1 - targetRPM1) < 100;
         ready2 = Math.abs(RPM2 - targetRPM2) < 100;
+
+        Debug.debugPID(targetRPM1, RPM1, targetRPM2, RPM2);
 
         Debug.telemetry.addLine("RPM1: " + RPM1);
         Debug.telemetry.addLine("RPM2: " + RPM2);
