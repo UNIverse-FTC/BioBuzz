@@ -6,7 +6,7 @@ public class ToggleButton implements Button {
 
     private final Button button;
     public ToggleButton(Gamepad gamepad, ButtonType button) {
-        this.button = new IdempotentButton(gamepad, button);
+        this.button = new MomentarySwitchButton(gamepad, button);
     }
     boolean returnVal = false;
 

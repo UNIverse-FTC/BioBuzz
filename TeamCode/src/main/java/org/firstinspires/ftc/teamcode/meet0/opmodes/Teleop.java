@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.meet0.opmodes;
 import static org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ButtonType.*;
 
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.HoodState;
-import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -14,8 +12,7 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
-import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.FlipFlopButton;
-import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.IdempotentButton;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.MomentarySwitchButton;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
 @TeleOp(name="\uD83C\uDFAE TeleOp")
@@ -39,9 +36,9 @@ public class Teleop extends LinearOpMode {
         double fallBackSpeed = 2740;
         double speed = 1;
 
-        Button manualSpeedUp = new IdempotentButton(gamepad2, DPAD_UP);
-        Button manualSpeedDown = new IdempotentButton(gamepad2, DPAD_DOWN);
-        Button poseReset = new IdempotentButton(gamepad2, A);
+        Button manualSpeedUp = new MomentarySwitchButton(gamepad2, DPAD_UP);
+        Button manualSpeedDown = new MomentarySwitchButton(gamepad2, DPAD_DOWN);
+        Button poseReset = new MomentarySwitchButton(gamepad2, A);
         Button toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER);
 
         Button armShooter = new ToggleButton(gamepad1, A);
@@ -83,13 +80,14 @@ public class Teleop extends LinearOpMode {
                 drivetrain.resetPos();
             }
 
+            Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
+
             if (armShooter.get()) {
                 if (toggleOverride.get()) {
                     launcher.shooterLeft.setRPM(fallBackSpeed);
                     launcher.shooterRight.setRPM(fallBackSpeed);
 
                     Debug.telemetry.addLine("Shooter: ARMED - MANUAL");
-                    Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
                 }
                 else {
                     launcher.shoot(drivetrain.calculateDistance());

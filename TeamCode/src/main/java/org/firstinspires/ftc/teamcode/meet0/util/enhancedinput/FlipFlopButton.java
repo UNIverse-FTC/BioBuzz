@@ -10,8 +10,8 @@ public class FlipFlopButton implements Button {
 
     private boolean previousButton = false;
     public FlipFlopButton(Gamepad gamepad, ButtonType button1, ButtonType button2) {
-        this.button1 = new IdempotentButton(gamepad, button1);
-        this.button2 = new IdempotentButton(gamepad, button2);
+        this.button1 = new MomentarySwitchButton(gamepad, button1);
+        this.button2 = new MomentarySwitchButton(gamepad, button2);
 
     }
     boolean returnVal = false;

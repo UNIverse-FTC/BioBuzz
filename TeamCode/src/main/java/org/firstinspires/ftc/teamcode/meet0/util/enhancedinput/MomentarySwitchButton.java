@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode.meet0.util.enhancedinput;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class IdempotentButton implements Button {
+public class MomentarySwitchButton implements Button {
 
     private final Button button;
     private boolean previousButton = false;
-    public IdempotentButton(Gamepad gamepad, ButtonType button) {
+    public MomentarySwitchButton(Gamepad gamepad, ButtonType button) {
         this.button = new ContinuousButton(gamepad, button);
     }
     boolean returnVal = false;

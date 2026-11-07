@@ -41,7 +41,6 @@ public class Intake {
         Debug.panelsTelemetry.addData("Intake Target", targetRPM);
         Debug.panelsTelemetry.addData("Intake RPM", RPM);
 
-        Debug.telemetry.addLine("Target RPM: " + targetRPM);
 //        ready1 = Math.abs(RPM - targetRPM) < 100;
     }
 
