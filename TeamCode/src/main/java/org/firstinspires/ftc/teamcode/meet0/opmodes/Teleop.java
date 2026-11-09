@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ContinuousButton;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.MomentarySwitchButton;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
@@ -41,12 +42,25 @@ public class Teleop extends LinearOpMode {
 
         Button manualSpeedUp = new MomentarySwitchButton(gamepad2, DPAD_UP);
         Button manualSpeedDown = new MomentarySwitchButton(gamepad2, DPAD_DOWN);
-        Button poseReset = new MomentarySwitchButton(gamepad2, A);
+//        Button poseReset = new MomentarySwitchButton(gamepad2, A);
         Button toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER);
+
+        Button poseReset = new MomentarySwitchButton(gamepad2, A, drivetrain::resetPos);
+
 
         Button armShooter = new ToggleButton(gamepad1, A);
         Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
-        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
+//        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
+
+        //If this gives an errors, or doesn't work, comment it out and uncomment the one above...
+        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> {
+            drivetrain.aim(true);
+        }, () -> {
+            drivetrain.aim(false);
+        });
+
+        Button intakeToggle = new ContinuousButton(gamepad1, RIGHT_BUMPER, intake::suck, intake::stoppySloppy);
+
 
         List<Button> buttons = List.of(
                 manualSpeedUp,
@@ -55,7 +69,8 @@ public class Teleop extends LinearOpMode {
                 toggleOverride,
                 armShooter,
                 speedMode,
-                toggleAim
+                toggleAim,
+                intakeToggle
         );
 
         while (opModeIsActive()) {
@@ -73,24 +88,24 @@ public class Teleop extends LinearOpMode {
                 fallBackSpeed -= 20;
             }
 
-            if (toggleAim.get()) {
-                drivetrain.aim(true);
-                Debug.telemetry.addLine("AIMING ACTIVE");
-            }
-            else {
-                drivetrain.aim(false);
-            }
+//            if (toggleAim.get()) {
+//                drivetrain.aim(true);
+//                Debug.telemetry.addLine("AIMING ACTIVE");
+//            }
+//            else {
+//                drivetrain.aim(false);
+//            }
 
-            if (gamepad1.right_bumper) {
-                intake.suck();
-            }
-            else {
-                intake.stoppySloppy();
-            }
+//            if (gamepad1.right_bumper) {
+//                intake.suck();
+//            }
+//            else {
+//                intake.stoppySloppy();
+//            }
 
-            if (poseReset.get()) {
-                drivetrain.resetPos();
-            }
+//            if (poseReset.get()) {
+//                drivetrain.resetPos();
+//            }
 
             Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
 

@@ -11,12 +11,17 @@ public class MomentarySwitchButton implements Button {
     public MomentarySwitchButton(Gamepad gamepad, ButtonType button) {
         this.button = new ContinuousButton(gamepad, button);
     }
-
+    public MomentarySwitchButton(Gamepad gamepad, ButtonType button, Runnable trueBinding) {
+        this.button = new ContinuousButton(gamepad, button);
+        this.trueBinding = trueBinding;
+    }
     public MomentarySwitchButton(Gamepad gamepad, ButtonType button, Runnable trueBinding, Runnable falseBinding) {
         this.button = new ContinuousButton(gamepad, button);
         this.trueBinding = trueBinding;
         this.falseBinding = falseBinding;
     }
+
+
     boolean returnVal = false;
 
 
