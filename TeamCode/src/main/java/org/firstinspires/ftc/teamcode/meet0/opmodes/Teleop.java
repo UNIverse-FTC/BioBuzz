@@ -53,11 +53,7 @@ public class Teleop extends LinearOpMode {
 //        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
 
         //If this gives an errors, or doesn't work, comment it out and uncomment the one above...
-        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> {
-            drivetrain.aim(true);
-        }, () -> {
-            drivetrain.aim(false);
-        });
+        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false));
 
         Button intakeToggle = new ContinuousButton(gamepad1, RIGHT_BUMPER, intake::suck, intake::stoppySloppy);
 
