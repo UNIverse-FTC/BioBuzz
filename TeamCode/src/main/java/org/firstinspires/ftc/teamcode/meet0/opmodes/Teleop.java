@@ -15,11 +15,14 @@ import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.MomentarySwitchButton;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
+import java.util.List;
+
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
 
 
-    public void runOpMode() {
+    public void runOpMode()
+    {
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Drivetrain drivetrain = new Drivetrain(robotHardware);
@@ -45,6 +48,15 @@ public class Teleop extends LinearOpMode {
         Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
         Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
 
+        List<Button> buttons = List.of(
+                manualSpeedUp,
+                manualSpeedDown,
+                poseReset,
+                toggleOverride,
+                armShooter,
+                speedMode,
+                toggleAim
+        );
 
         while (opModeIsActive()) {
 
@@ -73,7 +85,7 @@ public class Teleop extends LinearOpMode {
                 intake.suck();
             }
             else {
-                intake.stopSTOPSTOPITSTOP();
+                intake.stoppySloppy();
             }
 
             if (poseReset.get()) {
@@ -115,6 +127,10 @@ public class Teleop extends LinearOpMode {
             launcher.update();
             intake.update();
             Debug.update();
+
+            for (Button button : buttons) {
+                button.update();
+            }
         }
     }
 }

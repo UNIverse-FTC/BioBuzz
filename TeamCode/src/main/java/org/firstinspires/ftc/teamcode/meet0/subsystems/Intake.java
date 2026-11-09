@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.meet0.subsystems;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
-import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 
 
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Intake {
 
@@ -29,7 +27,7 @@ public class Intake {
         targetRPM = -400;
     }
 
-    public void stopSTOPSTOPITSTOP() {
+    public void stoppySloppy() {
         targetRPM = 0;
     }
 

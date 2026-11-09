@@ -47,7 +47,7 @@ public class Debug {
         panelsField.line(robotPose.x() + 20 * Math.cos(robotPose.heading()), robotPose.y() + 20 * Math.sin(robotPose.heading()));
         panelsField.setStyle(new Style("red", "green", 2.0));
         panelsField.line(robotPose.x() + 20 * Math.cos(targetAngle), robotPose.y() + 20 * Math.sin(targetAngle));
-
+//
 //        String robotIcon = " ";
 //
 //        double adjustedHeading = Math.toDegrees(robotPose.heading());
@@ -56,31 +56,31 @@ public class Debug {
 //
 //        switch (octant) {
 //            case (0):
-//                robotIcon = " →";
+//                robotIcon = " \u2192";
 //                break;
 //            case (1):
-//                robotIcon = " ↗";
+//                robotIcon = " \u2197";
 //                break;
 //            case (2):
-//                robotIcon = " ↑";
+//                robotIcon = " \u2191";
 //                break;
 //            case (3):
-//                robotIcon = " ↖";
+//                robotIcon = " \u2196";
 //                break;
 //            case (4):
-//                robotIcon = " ←";
+//                robotIcon = " \u2190";
 //                break;
 //            case (5):
-//                robotIcon = " ↙";
+//                robotIcon = " \u2199";
 //                break;
 //            case (6):
-//                robotIcon = " ↓";
+//                robotIcon = " \u2193";
 //                break;
 //            case (7):
-//                robotIcon = " ↘";
+//                robotIcon = " \u2198";
 //                break;
 //            case (8):
-//                robotIcon = " →";
+//                robotIcon = " \u2192";
 //        }
 //
 //        int adjustedX = (int) Math.round(robotPose.x() / Constants.GRID_RES);

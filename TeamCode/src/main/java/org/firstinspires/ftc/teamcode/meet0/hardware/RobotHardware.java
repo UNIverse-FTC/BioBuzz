@@ -14,21 +14,13 @@ import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 
 public class RobotHardware {
-    public RobotHardware(HardwareMap hardwareMap) {
-        init(hardwareMap);
-
-    }
     public MotorEx frontLeft, backLeft, frontRight, backRight, shooter1, shooter2, intake;
     public HardwareMap hardwareMap;
     public MecanumDrive mecanum;
-
     public ServoEx hoodServo;
-
     public CustomPID intakePID;
-
     public VoltageSensor voltage;
-    private void init(HardwareMap hardwareMap) {
-
+    public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
         voltage = hardwareMap.get(VoltageSensor.class, "Control Hub");
@@ -42,8 +34,7 @@ public class RobotHardware {
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
         backRight.setInverted(true);
         hoodServo = new ServoEx(hardwareMap, "hoodServo");
-//
-//
+
         shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
         shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
 
@@ -51,32 +42,21 @@ public class RobotHardware {
         shooter2.setInverted(true);
         shooter2.setRunMode(RunMode.VelocityControl);
 
-        shooter1.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-        shooter1.setFeedforwardCoefficients(Constants.KS, Constants.KV);
+        shooter1.setVeloCoefficients(Constants.Launcher.KP,Constants.Launcher.KI,Constants.Launcher.KD);
+        shooter1.setFeedforwardCoefficients(Constants.Launcher.KS, Constants.Launcher.KS);
 
-        shooter2.setVeloCoefficients(Constants.KP,Constants.KI,Constants.KD);
-        shooter2.setFeedforwardCoefficients(Constants.KS, Constants.KV);
-//
-//
+        shooter2.setVeloCoefficients(Constants.Launcher.KP,Constants.Launcher.KI,Constants.Launcher.KD);
+        shooter2.setFeedforwardCoefficients(Constants.Launcher.KS, Constants.Launcher.KV);
+
         intake = new MotorEx(hardwareMap, "intakeMotor", Motor.GoBILDA.RPM_435);
 
         intake.setRunMode(RunMode.VelocityControl);
 
-        intake.setVeloCoefficients(Constants.KP_intake,Constants.KI_intake,Constants.KD_intake);
-        intake.setFeedforwardCoefficients(Constants.KS_intake, Constants.KV_intake);
+        intake.setVeloCoefficients(Constants.Intake.KP,Constants.Intake.KI,Constants.Intake.KD);
+        intake.setFeedforwardCoefficients(Constants.Intake.KS, Constants.Intake.KV);
 
         mecanum = new MecanumDrive(frontLeft, backRight, backLeft, frontRight);
         mecanum.setRightSideInverted(true);
-
-        intakePID = new CustomPID(
-                Constants.Intake.KP,
-                Constants.Intake.KI,
-                Constants.Intake.KD,
-                Constants.Intake.KV,
-                Constants.Intake.KS,
-                Constants.Intake.sp,
-                Constants.Intake.pv
-        );
     }
 
 }

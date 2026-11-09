@@ -17,8 +17,6 @@ import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 public class Drivetrain {
 
     public final  MecanumDrive driveTrain;
-    public MotorEx frontLeft, backLeft, frontRight, backRight;
-
     public Follower follower;
     private Pose robotPosition;
     private boolean aiming = false;
@@ -37,11 +35,11 @@ public class Drivetrain {
         follower.setPose(OpModeStorage.autonomousEndPose);
 
         aimPID = new CustomPID(
-                2.0,
-                0,
-                0.67,
-                0,
-                0,
+                Constants.Drivetrain.KP,
+                Constants.Drivetrain.KI,
+                Constants.Drivetrain.KD,
+                Constants.Drivetrain.KV,
+                Constants.Drivetrain.KS,
                 0,
                 0
         );
@@ -120,7 +118,8 @@ public class Drivetrain {
     }
 
     public double calculateDistance() {
-        return Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+        return Math.hypot(xDistance,yDistance);
+        //return Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
     }
 
     public void resetPos() {

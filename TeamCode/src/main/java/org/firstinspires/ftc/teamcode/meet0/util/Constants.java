@@ -3,26 +3,33 @@ package org.firstinspires.ftc.teamcode.meet0.util;
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.math.Pose;
 import com.seattlesolvers.solverslib.util.InterpLUT;
-@Configurable
 public class Constants {
 
     //higher number make it less detailed, and numbers closer to zero increase res.
-    public static int GRID_RES = 6;
+    public static int GRID_RES = 7;
     public static double SHOOTER_POWER = 2500;
     public  static  double FALLBACK_POWER = 2000;
-    public static double KP = 6;
-    public static double KI = 0.0;
-    public static double KD = 0.0;
 
-    public static double KS = 0.0;
-    public static double KV = 0.0075;
+    @Configurable
+    public static class Drivetrain {
+        public static double KP = 6;
+        public static double KI = 0.0;
+        public static double KD = 0.0;
 
-    public static double KP_intake = 6;
-    public static double KI_intake = 0.0;
-    public static double KD_intake = 0.0;
+        public static double KS = 0.0;
+        public static double KV = 0.0075;
+    }
 
-    public static double KS_intake = 0.0;
-    public static double KV_intake = 0.0075;
+    @Configurable
+    public static class Launcher {
+        public static double KP = 6;
+        public static double KI = 0.0;
+        public static double KD = 0.0;
+
+        public static double KS = 0.0;
+        public static double KV = 0.0075;
+    }
+
 
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;

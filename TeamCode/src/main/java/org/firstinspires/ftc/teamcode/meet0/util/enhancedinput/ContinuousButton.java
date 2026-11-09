@@ -4,12 +4,21 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class ContinuousButton implements Button {
 
+    Runnable trueBinding = null;
+    Runnable falseBinding = null;
     private final Gamepad gamepad;
     private final ButtonType button;
     private boolean previousButton = false;
     public ContinuousButton(Gamepad gamepad, ButtonType button) {
         this.gamepad = gamepad;
         this.button = button;
+    }
+
+    public ContinuousButton(Gamepad gamepad, ButtonType button, Runnable trueBinding, Runnable falseBinding) {
+        this.button = button;
+        this.gamepad = gamepad;
+        this.trueBinding = trueBinding;
+        this.falseBinding = falseBinding;
     }
     boolean returnVal = false;
 
@@ -47,5 +56,15 @@ public class ContinuousButton implements Button {
                 return gamepad.right_trigger_pressed;
         }
         return false;
+    }
+
+    @Override
+    public void update() {
+        if (trueBinding != null && get()) {
+            trueBinding.run();
+        }
+        else if (falseBinding != null && !get()) {
+            falseBinding.run();
+        }
     }
 }
