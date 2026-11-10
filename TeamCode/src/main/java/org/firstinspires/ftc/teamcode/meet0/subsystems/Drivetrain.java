@@ -137,9 +137,7 @@ public class Drivetrain {
     private double calculatePID(double targetAngle) {
         angleRads = Math.atan(xDistance / yDistance) + (targetAngle) + Math.PI;
 
-        double rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
-
-        return rotationAim;
+        return aimPID.calculate(angleRads, robotPosition.heading());
     }
     public double calculateDistance() {
         return Math.hypot(xDistance,yDistance);
