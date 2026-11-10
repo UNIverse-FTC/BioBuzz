@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.DrivetrainState;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
 import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ContinuousButton;
@@ -24,7 +25,6 @@ import java.util.List;
 public class Teleop extends LinearOpMode {
 
     Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle;
-
     double fallBackSpeed = 2740;
     double speed = 1;
 
@@ -32,9 +32,10 @@ public class Teleop extends LinearOpMode {
     {
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
-        Drivetrain drivetrain = new Drivetrain(robotHardware);
+
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
+        Drivetrain drivetrain = new Drivetrain(robotHardware, DrivetrainState.TELEOP);
 
         Debug.init(telemetry);
 
@@ -59,7 +60,7 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            drivetrain.Drive(
+            drivetrain.drive(
                     gamepad1.right_stick_x * speed * 0.7,
                     gamepad1.left_stick_y * speed,
                     gamepad1.left_stick_x * speed
@@ -72,6 +73,7 @@ public class Teleop extends LinearOpMode {
                     launcher.shooterLeft.setRPM(fallBackSpeed);
                     launcher.shooterRight.setRPM(fallBackSpeed);
 
+
                     Debug.telemetry.addLine("Shooter: ARMED - MANUAL");
                 }
                 else {
@@ -80,8 +82,7 @@ public class Teleop extends LinearOpMode {
                 }
             }
             else {
-                launcher.shooterLeft.setRPM(0);
-                launcher.shooterRight.setRPM(0);
+                launcher.stop();
 
                 Debug.telemetry.addLine("Shooter: IDLE");
             }

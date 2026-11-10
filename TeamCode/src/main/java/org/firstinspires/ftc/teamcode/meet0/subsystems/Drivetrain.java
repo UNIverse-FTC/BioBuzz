@@ -4,12 +4,11 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
-import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
-
+import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.DrivetrainState.*;
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet0.opmodes.OpModeStorage;
-import org.firstinspires.ftc.teamcode.meet0.paths.AutoSimple;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.DrivetrainState;
 import org.firstinspires.ftc.teamcode.meet0.util.Constants;
 import org.firstinspires.ftc.teamcode.meet0.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
@@ -26,14 +25,19 @@ public class Drivetrain {
     private CustomPID aimPID;
     private double angleRads;
     private double lastHeading = 0;
+
+    private DrivetrainState drivetrainState;
     Pose hivePosition;
 
-    public Drivetrain(RobotHardware hardware) {
+    private double strafe, lateral, horizontal;
+    public Drivetrain(RobotHardware hardware, DrivetrainState drivetrainState) {
 
         driveTrain = hardware.mecanum;
 
         follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
         follower.setPose(OpModeStorage.autonomousEndPose);
+
+        this.drivetrainState = drivetrainState;
 
         aimPID = new CustomPID(
                 Constants.Drivetrain.KP,
@@ -48,8 +52,14 @@ public class Drivetrain {
     }
 
 
-    public  void Drive(double lateral, double horizontal, double strafe)
+    public  void drive(double lateral, double horizontal, double strafe)
     {
+        this.lateral = lateral;
+        this.horizontal = horizontal;
+        this.strafe = strafe;
+    }
+
+    public void update() {
         if (aiming) {
             double rotationAim = calculatePID(Math.PI / 2);
 
@@ -74,7 +84,7 @@ public class Drivetrain {
                 }
             }
         }
-        else {
+        else if (!(drivetrainState == DrivetrainState.AUTO)) {
             if (returning) {
                 double rotationAim = calculatePID(lastHeading + Math.PI);
                 driveTrain.driveRobotCentric(-strafe, rotationAim, horizontal);
@@ -119,9 +129,7 @@ public class Drivetrain {
 
         xDistance = robotPosition.x() - hivePosition.x();
         yDistance = hivePosition.y() - robotPosition.y();
-
     }
-
     public void aim(boolean active) {
         if (active) {
             returning = false;

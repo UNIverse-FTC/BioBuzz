@@ -6,10 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.meet0.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.meet0.paths.near.NearAuto;
+import org.firstinspires.ftc.teamcode.meet0.paths.near.NearPaths;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
+import org.firstinspires.ftc.teamcode.meet0.subsystems.Subsystems;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.enums.LauncherState;
 import org.firstinspires.ftc.teamcode.meet0.util.Debug;
+import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.Button;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class PathExecutor {
@@ -18,110 +23,36 @@ public class PathExecutor {
     private int pathState = 0;
 
     private HardwareMap hardwareMap;
-
-    private Launcher launcher;
-
-    private Intake intake;
     private LinearOpMode opMode;
 
     private Timer launchTimer;
 
+    private Intake intake;
+    private Drivetrain drivetrain;
+    private Launcher launcher;
+    private Auto auto;
     public PathExecutor(RobotHardware robotHardware) {
         this.hardwareMap = robotHardware.hardwareMap;
     }
-    public void init(Launcher launcher, Intake intake, LinearOpMode opMode, int alliance) {
-        pathState = 0;
-        follower = Constants.create(hardwareMap);
-        paths = new AutoSimple(alliance);
+    public void init(Subsystems subsystems, Button auto) {
+        if (auto.get()) {
+            this.auto = new NearAuto(subsystems);
+        }
+        else {
+
+        }
+        this.launcher = subsystems.launcher;
+        this.drivetrain = subsystems.drivetrain;
+        this.intake = subsystems.intake;
+
+        follower = drivetrain.follower;
         follower.setPose(paths.start);
-        this.launcher = launcher;
-        this.opMode = opMode;
-        this.intake = intake;
-        launchTimer = new Timer();
     }
 
     public void update() {
-        follower.update();
-        Debug.updateRobot(follower.pose(), 10);
-        Debug.telemetry.addLine("Current: " + follower.pose().x() + " " + follower.pose().y());
-        Debug.telemetry.addLine("Path State: " + pathState);
-//        switch (pathState) {
-//            case(0):
-//                launcher.shooterLeft.setRPM(2800);
-//                launcher.shooterRight.setRPM(2800);
-//                if (launcher.shooterLeft.getLauncherState() == LauncherState.READY && launcher.shooterRight.getLauncherState() == LauncherState.READY) {
-//                    intake.suck();
-//                    launchTimer.reset();
-//                    pathState++;
-//                }
-//                break;
-//
-//            case(1):
-//                if (launchTimer.seconds() >= 1.5) {
-//                    launcher.shooterLeft.setRPM(0);
-//                    launcher.shooterRight.setRPM(0);
-//                    intake.suck(false, true);
-//                    pathState++;
-//                }
-//                break;
-//            case(2):
-//                follower.follow(paths.path1());
-//                pathState++;
-//                break;
-//            case(3):
-//                if (!follower.isBusy()) {
-//                    intake.suck(true,true);
-//                    follower.follow(paths.path2());
-//                    pathState++;
-//                }
-//                break;
-//            case(4):
-//                if (!follower.isBusy()) {
-//                    follower.follow(paths.path3());
-//                    pathState++;
-//                }
-//                break;
-//            case(5):
-//                if (!follower.isBusy()) {
-//                    intake.suck(false, true);
-//                    follower.follow(paths.path4());
-//                    pathState++;
-//                }
-//                break;
-//            case(6):
-//                if (!follower.isBusy()) {
-//                    follower.follow(paths.path5());
-//                    pathState++;
-//                    break;
-//                }
-//                break;
-//            case(7):
-//                launcher.shooterLeft.setRPM(2800);
-//                launcher.shooterRight.setRPM(2800);
-//                if (!follower.isBusy()) {
-//                    if (launcher.shooterLeft.getLauncherState() == LauncherState.READY && launcher.shooterRight.getLauncherState() == LauncherState.READY) {
-//                        intake.suck(true, true);
-//                        launchTimer.reset();
-//                        pathState++;
-//                    }
-//                }
-//                break;
-//            case(8):
-//                if (launchTimer.seconds() >= 1.5) {
-//                    launcher.shooterLeft.setRPM(0);
-//                    launcher.shooterRight.setRPM(0);
-//                    intake.suck(false, true);
-//                    pathState++;
-//                }
-//                break;
-//            case(9):
-//                if(!follower.isBusy()) {
-//                    follower.follow(paths.path6());
-//                    pathState++;
-//                }
-//                break;
-//            case (10):
-//                break;
-//        }
+        auto.update();
+        drivetrain.update();
+        intake.update();
+        launcher.update();
     }
 }

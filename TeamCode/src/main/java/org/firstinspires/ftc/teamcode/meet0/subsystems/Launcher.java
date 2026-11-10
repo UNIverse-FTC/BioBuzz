@@ -23,7 +23,7 @@ public class Launcher {
 
     private double targetRPM1, targetRPM2, RPM1, RPM2;
 
-    private boolean ready1, ready2;
+    public boolean ready1, ready2;
 
     private LauncherState launcherState2, launcherState1 = LauncherState.IDLE;
 
@@ -67,6 +67,11 @@ public class Launcher {
     public void shoot(double distance) {
         shooterLeft.setRPM(pollenLUT.get(distance));
         shooterRight.setRPM(pollenLUT.get(distance));
+    }
+
+    public void stop() {
+        shooterRight.setRPM(0);
+        shooterLeft.setRPM(0);
     }
     public class ShooterLeft {
         public void setRPM(double targetRPM) {
