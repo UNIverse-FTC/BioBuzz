@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.meet0.paths;
+package org.firstinspires.ftc.teamcode.meet0.paths.far;
 
 import static com.pedropathing.api.Paths.*;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
-public class AutoSimple {
+public class FarPaths {
 
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
@@ -17,12 +17,6 @@ public class AutoSimple {
     private final Pose point4Control1 = poseFactory.of(13, 24, 0);
     private final Pose point5 = poseFactory.of(60, 112, -90);
     private final Pose point6 = poseFactory.of(8, 112, 0);
-    public AutoSimple(int alliance) {
-
-        if (alliance == 1) {
-            poseFactory.mirrorX(0);
-        }
-    }
 
     public Path path1() {
         return line(start, path1).linear(start, path1);

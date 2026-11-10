@@ -4,6 +4,7 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.meet0.paths.Auto;
+import org.firstinspires.ftc.teamcode.meet0.paths.SuperAuto;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet0.subsystems.Launcher;
@@ -11,31 +12,11 @@ import org.firstinspires.ftc.teamcode.meet0.subsystems.Subsystems;
 
 import java.util.Timer;
 
-public class NearAuto implements Auto {
-
-    private Intake intake;
-    private Launcher launcher;
-    private Drivetrain drivetrain;
-
-    private Follower follower;
-
-    private ElapsedTime timer;
-
-    private int pathState = 0;
-
-
+public class NearAuto extends SuperAuto {
     NearPaths autoPath = new NearPaths();
 
     public NearAuto(Subsystems subsystems) {
-        this.intake = subsystems.intake;
-        this.launcher = subsystems.launcher;
-        this.drivetrain = subsystems.drivetrain;
-    }
-
-    @Override
-    public void initialize() {
-        follower = drivetrain.follower;
-        timer = new ElapsedTime();
+        super(subsystems);
     }
 
     @Override
