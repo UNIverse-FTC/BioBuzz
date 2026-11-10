@@ -34,7 +34,7 @@ public class Debug {
         panelsTelemetry.addData("Right Target", rightTarget);
         panelsTelemetry.addData("Right Current", rightCurrent);
         panelsTelemetry.addData("Left Target", leftTarget);
-        panelsTelemetry.addData("Left Target", leftCurrent);
+        panelsTelemetry.addData("Left Current", leftCurrent);
     }
     public static void updateRobot(Pose robotPose, double targetAngle) {
 

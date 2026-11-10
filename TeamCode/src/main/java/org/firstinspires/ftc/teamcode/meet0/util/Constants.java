@@ -12,12 +12,12 @@ public class Constants {
 
     @Configurable
     public static class Drivetrain {
-        public static double KP = 6;
+        public static double KP = 0.56;
         public static double KI = 0.0;
         public static double KD = 0.0;
 
         public static double KS = 0.0;
-        public static double KV = 0.0075;
+        public static double KV = 0.0;
     }
 
     @Configurable
@@ -27,7 +27,7 @@ public class Constants {
         public static double KD = 0.0;
 
         public static double KS = 0.0;
-        public static double KV = 0.0075;
+        public static double KV = 1;
     }
 
 

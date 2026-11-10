@@ -43,7 +43,7 @@ public class RobotHardware {
         shooter2.setRunMode(RunMode.VelocityControl);
 
         shooter1.setVeloCoefficients(Constants.Launcher.KP,Constants.Launcher.KI,Constants.Launcher.KD);
-        shooter1.setFeedforwardCoefficients(Constants.Launcher.KS, Constants.Launcher.KS);
+        shooter1.setFeedforwardCoefficients(Constants.Launcher.KS, Constants.Launcher.KV);
 
         shooter2.setVeloCoefficients(Constants.Launcher.KP,Constants.Launcher.KI,Constants.Launcher.KD);
         shooter2.setFeedforwardCoefficients(Constants.Launcher.KS, Constants.Launcher.KV);

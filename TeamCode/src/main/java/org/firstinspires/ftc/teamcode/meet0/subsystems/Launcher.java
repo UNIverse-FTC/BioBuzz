@@ -65,7 +65,7 @@ public class Launcher {
     }
 
     public void shoot(double distance) {
-        shooterLeft.setRPM(nectarLUT.get(distance));
+        shooterLeft.setRPM(pollenLUT.get(distance));
         shooterRight.setRPM(pollenLUT.get(distance));
     }
     public class ShooterLeft {
@@ -91,9 +91,13 @@ public class Launcher {
 
         nectarLUT.createLUT();
         //this continues
-        pollenLUT.add(-1000,2800);
-
-        pollenLUT.add(1000,2800);
+        pollenLUT.add(0,2400);
+        pollenLUT.add(10, 2500);
+        pollenLUT.add(20, 2600);
+        pollenLUT.add(30, 2700);
+        pollenLUT.add(40, 2800);
+        pollenLUT.add(50, 2900);
+        pollenLUT.add(60,3000);
 
         pollenLUT.createLUT();
         //same here

@@ -20,11 +20,12 @@ public class Drivetrain {
     public Follower follower;
     private Pose robotPosition;
     private boolean aiming = false;
+    private boolean returning = false;
     private double xDistance;
     private double yDistance;
     private CustomPID aimPID;
     private double angleRads;
-    private double rotationAim = 0;
+    private double lastHeading = 0;
     Pose hivePosition;
 
     public Drivetrain(RobotHardware hardware) {
@@ -49,16 +50,19 @@ public class Drivetrain {
 
     public  void Drive(double lateral, double horizontal, double strafe)
     {
-        if (!aiming) {
-            driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
-        }
-        else {
+        if (aiming) {
+            double rotationAim = calculatePID(Math.PI / 2);
+
+
+            Debug.panelsTelemetry.addData("Target Heading", Math.toDegrees(angleRads));
+
+            Debug.panelsTelemetry.addData("PID", Math.toDegrees(rotationAim));
             if (hivePosition.y() > 72) {
                 if (robotPosition.y() <= hivePosition.y() + 5) {
                     driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
                 }
                 else {
-                    driveTrain.driveRobotCentric(strafe, rotationAim, -horizontal);
+                    driveTrain.driveRobotCentric(-strafe, rotationAim, horizontal);
                 }
             }
             else {
@@ -66,8 +70,23 @@ public class Drivetrain {
                     driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
                 }
                 else {
-                    driveTrain.driveRobotCentric(strafe, rotationAim, -horizontal);
+                    driveTrain.driveRobotCentric(-strafe, rotationAim, horizontal);
                 }
+            }
+        }
+        else {
+            if (returning) {
+                double rotationAim = calculatePID(lastHeading + Math.PI);
+                driveTrain.driveRobotCentric(-strafe, rotationAim, horizontal);
+                if (robotPosition.heading() > lastHeading - Math.toRadians(10) && robotPosition.heading() < lastHeading + Math.toRadians(10)) {
+                    returning = false;
+                }
+                if (lateral > 0.1) {
+                    returning = false;
+                }
+            }
+            else {
+                driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
             }
         }
 
@@ -95,6 +114,7 @@ public class Drivetrain {
             }
         }
 
+
         Debug.updateActiveHive(hivePosition);
 
         xDistance = robotPosition.x() - hivePosition.x();
@@ -104,19 +124,23 @@ public class Drivetrain {
 
     public void aim(boolean active) {
         if (active) {
+            returning = false;
             aiming = true;
-
-            angleRads = Math.atan(xDistance / yDistance) + (Math.PI / 2) + Math.PI;
-
-            rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
-
-            Debug.panelsTelemetry.addData("Target Heading", Math.toDegrees(rotationAim));
         }
         else {
             aiming = false;
+            lastHeading = robotPosition.heading();
+            returning = true;
         }
     }
 
+    private double calculatePID(double targetAngle) {
+        angleRads = Math.atan(xDistance / yDistance) + (targetAngle) + Math.PI;
+
+        double rotationAim = aimPID.calculate(angleRads, robotPosition.heading());
+
+        return rotationAim;
+    }
     public double calculateDistance() {
         return Math.hypot(xDistance,yDistance);
         //return Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));

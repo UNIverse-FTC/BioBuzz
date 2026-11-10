@@ -18,9 +18,15 @@ import org.firstinspires.ftc.teamcode.meet0.util.enhancedinput.ToggleButton;
 
 import java.util.List;
 
+
+
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
 
+    Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle;
+
+    double fallBackSpeed = 2740;
+    double speed = 1;
 
     public void runOpMode()
     {
@@ -37,33 +43,18 @@ public class Teleop extends LinearOpMode {
         }
         waitForStart();
 
-        double fallBackSpeed = 2740;
-        double speed = 1;
-
-        Button manualSpeedUp = new MomentarySwitchButton(gamepad2, DPAD_UP);
-        Button manualSpeedDown = new MomentarySwitchButton(gamepad2, DPAD_DOWN);
-        Button toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER);
-
-        Button poseReset = new MomentarySwitchButton(gamepad2, A, drivetrain::resetPos);
-
-
-        Button armShooter = new ToggleButton(gamepad1, A);
-        Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
-
-        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false));
-
-        Button intakeToggle = new ContinuousButton(gamepad1, RIGHT_BUMPER, intake::suck, intake::stoppySloppy);
 
 
         List<Button> buttons = List.of(
-                manualSpeedUp,
-                manualSpeedDown,
-                poseReset,
-                toggleOverride,
-                armShooter,
-                speedMode,
-                toggleAim,
-                intakeToggle
+                manualSpeedUp = new MomentarySwitchButton(gamepad1, DPAD_UP, () -> adjustFallBackSpeed(1)),
+                manualSpeedDown = new MomentarySwitchButton(gamepad1, DPAD_DOWN, () -> adjustFallBackSpeed(-1)),
+                poseReset = new MomentarySwitchButton(gamepad2, A, drivetrain::resetPos),
+                toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER),
+
+                armShooter = new ToggleButton(gamepad1, A),
+                speedMode = new ToggleButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
+                toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
+                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER, intake::suck, intake::stoppySloppy)
         );
 
         while (opModeIsActive()) {
@@ -73,13 +64,6 @@ public class Teleop extends LinearOpMode {
                     gamepad1.left_stick_y * speed,
                     gamepad1.left_stick_x * speed
             );
-
-            if (manualSpeedUp.get()) {
-                fallBackSpeed += 20;
-            }
-            if (manualSpeedDown.get()) {
-                fallBackSpeed -= 20;
-            }
 
             Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
 
@@ -102,14 +86,6 @@ public class Teleop extends LinearOpMode {
                 Debug.telemetry.addLine("Shooter: IDLE");
             }
 
-            if (speedMode.get()) {
-                Debug.telemetry.addLine("SLOW MODE");
-                speed = 0.5;
-
-            } else {
-                speed = 1;
-
-            }
 
             Debug.telemetry.addLine("Distance: " + drivetrain.calculateDistance());
 
@@ -121,5 +97,17 @@ public class Teleop extends LinearOpMode {
                 button.update();
             }
         }
+    }
+
+    public void adjustFallBackSpeed(int m) {
+        fallBackSpeed += m * 20;
+    }
+
+    public void slowMode() {
+        speed = 0.5;
+    }
+
+    public void normalMode() {
+        speed = 1;
     }
 }
