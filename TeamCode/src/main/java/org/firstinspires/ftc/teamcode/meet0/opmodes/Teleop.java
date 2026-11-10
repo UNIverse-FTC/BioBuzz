@@ -42,7 +42,6 @@ public class Teleop extends LinearOpMode {
 
         Button manualSpeedUp = new MomentarySwitchButton(gamepad2, DPAD_UP);
         Button manualSpeedDown = new MomentarySwitchButton(gamepad2, DPAD_DOWN);
-//        Button poseReset = new MomentarySwitchButton(gamepad2, A);
         Button toggleOverride = new ToggleButton(gamepad2, RIGHT_BUMPER);
 
         Button poseReset = new MomentarySwitchButton(gamepad2, A, drivetrain::resetPos);
@@ -50,9 +49,7 @@ public class Teleop extends LinearOpMode {
 
         Button armShooter = new ToggleButton(gamepad1, A);
         Button speedMode = new ToggleButton(gamepad1, LEFT_BUMPER);
-//        Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER);
 
-        //If this gives an errors, or doesn't work, comment it out and uncomment the one above...
         Button toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false));
 
         Button intakeToggle = new ContinuousButton(gamepad1, RIGHT_BUMPER, intake::suck, intake::stoppySloppy);
@@ -83,25 +80,6 @@ public class Teleop extends LinearOpMode {
             if (manualSpeedDown.get()) {
                 fallBackSpeed -= 20;
             }
-
-//            if (toggleAim.get()) {
-//                drivetrain.aim(true);
-//                Debug.telemetry.addLine("AIMING ACTIVE");
-//            }
-//            else {
-//                drivetrain.aim(false);
-//            }
-
-//            if (gamepad1.right_bumper) {
-//                intake.suck();
-//            }
-//            else {
-//                intake.stoppySloppy();
-//            }
-
-//            if (poseReset.get()) {
-//                drivetrain.resetPos();
-//            }
 
             Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
 
