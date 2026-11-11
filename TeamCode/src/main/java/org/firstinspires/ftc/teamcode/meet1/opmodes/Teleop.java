@@ -92,6 +92,7 @@ public class Teleop extends LinearOpMode {
 
             launcher.update();
             intake.update();
+            drivetrain.update();
             Debug.update();
 
             for (Button button : buttons) {

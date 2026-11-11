@@ -44,7 +44,7 @@ public class PathExecutor {
         this.intake = subsystems.intake;
 
         follower = drivetrain.follower;
-        follower.setPose(paths.start);
+        follower.setPose(this.auto.getStart());
     }
 
     public void update() {

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.meet1.paths.near;
 
+import com.pedropathing.math.Pose;
+
 import org.firstinspires.ftc.teamcode.meet1.paths.SuperAuto;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
@@ -19,7 +21,7 @@ public class NearAuto extends SuperAuto {
                 timer.reset();
                 break;
             case (1):
-                if(!follower.isBusy() && timer.seconds() > 10) {
+                if(!follower.isBusy() && timer.seconds() > 5) {
                     double distance = drivetrain.calculateDistance();
                     drivetrain.aim(true);
                     launcher.shoot(distance);
@@ -34,7 +36,7 @@ public class NearAuto extends SuperAuto {
                 }
                 break;
             case (3):
-                if(!follower.isBusy() && timer.seconds() > 5) {
+                if(!follower.isBusy() && timer.seconds() > 1) {
                     intake.stoppySloppy();
                     drivetrain.aim(false);
                     launcher.stop();
@@ -48,10 +50,18 @@ public class NearAuto extends SuperAuto {
                 }
                 break;
             case(5):
+                if (!follower.isBusy()) {
+                    pathState++;
+                }
+                break;
+            case (6):
                 break;
         }
     }
 
-
+    @Override
+    public Pose getStart() {
+        return autoPath.start;
+    }
 }
 

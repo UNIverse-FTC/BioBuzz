@@ -29,7 +29,7 @@ public class MomentarySwitchButton implements Button {
     public boolean get() {
         boolean currentButton = button.get();
         returnVal = currentButton && !previousButton;
-        previousButton = button.get();
+        previousButton = currentButton;
         return returnVal;
     }
 

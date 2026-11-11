@@ -9,7 +9,7 @@ import com.pedropathing.paths.Path;
 public class NearPaths {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(10, 126, 0);
+    public final Pose start = poseFactory.of(10, 126, 0);
     private final Pose path1 = poseFactory.of(57.6951, 116.8225, -90);
     private final Pose point2Start = poseFactory.of(57.6951, 116.8225, -90);
     private final Pose point2 = poseFactory.of(10, 118, 0);

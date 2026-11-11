@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.meet1.paths.far;
 
+import com.pedropathing.math.Pose;
+
 import org.firstinspires.ftc.teamcode.meet1.paths.SuperAuto;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
@@ -40,5 +42,10 @@ public class FarAuto extends SuperAuto {
                 }
                 break;
         }
+    }
+
+    @Override
+    public Pose getStart() {
+        return paths.start;
     }
 }

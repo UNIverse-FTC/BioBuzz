@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.Button;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.FlipFlopButton;
+import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ToggleButton;
 
 @Autonomous(name = "\uD83E\uDD16 Autonomous")
 public class Auto extends LinearOpMode {
@@ -35,7 +36,7 @@ public class Auto extends LinearOpMode {
         Debug.init(telemetry);
 
 
-        Button autoSelector = new FlipFlopButton(gamepad1, A, B);
+        Button autoSelector = new ToggleButton(gamepad1, A);
 
         while (opModeInInit()){
 

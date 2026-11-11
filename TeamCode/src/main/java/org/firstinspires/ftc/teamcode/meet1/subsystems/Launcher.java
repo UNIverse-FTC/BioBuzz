@@ -96,6 +96,10 @@ public class Launcher {
         pollenLUT.add(40, 2800);
         pollenLUT.add(50, 2900);
         pollenLUT.add(60,3000);
+        pollenLUT.add(70, 3100);
+        pollenLUT.add(80, 3200);
+        pollenLUT.add(90, 3300);
+        pollenLUT.add(200, 6000);
 
         pollenLUT.createLUT();
         //same here
