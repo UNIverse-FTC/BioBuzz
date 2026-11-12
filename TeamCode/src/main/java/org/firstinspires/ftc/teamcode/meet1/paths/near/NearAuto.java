@@ -23,7 +23,6 @@ public class NearAuto extends SuperAuto {
             case (1):
                 if(!follower.isBusy() && timer.seconds() > 5) {
                     double distance = drivetrain.calculateDistance();
-                    drivetrain.aim(true);
                     launcher.shoot(distance);
                     pathState++;
                 }
@@ -38,7 +37,6 @@ public class NearAuto extends SuperAuto {
             case (3):
                 if(!follower.isBusy() && timer.seconds() > 1) {
                     intake.stoppySloppy();
-                    drivetrain.aim(false);
                     launcher.stop();
                     pathState++;
                 }
