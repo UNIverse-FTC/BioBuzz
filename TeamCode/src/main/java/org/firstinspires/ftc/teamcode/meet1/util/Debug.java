@@ -104,7 +104,7 @@ public class Debug {
 
 
     public  static void updateActiveHive(@NonNull Pose hivePosition) {
-        panelsField.moveCursor(hivePosition.x(), hivePosition.y());
+        panelsField.moveCursor(hivePosition.x() - 5, hivePosition.y() - 10);
         panelsField.rect(10, 20);
     }
     public  static void update() {
