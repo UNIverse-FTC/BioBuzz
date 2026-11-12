@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.meet1.paths;
+package org.firstinspires.ftc.teamcode.meet1.autonomous;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.utils.Timer;
@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.meet1.hardware.RobotHardware;
-import org.firstinspires.ftc.teamcode.meet1.paths.far.FarAuto;
-import org.firstinspires.ftc.teamcode.meet1.paths.far.FarPaths;
-import org.firstinspires.ftc.teamcode.meet1.paths.near.NearAuto;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.far.FarAuto;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.far.FarPaths;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.near.NearAuto;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;

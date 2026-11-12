@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.meet1.paths;
+package org.firstinspires.ftc.teamcode.meet1.autonomous;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.meet1.paths.near.NearPaths;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.near.NearPaths;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;

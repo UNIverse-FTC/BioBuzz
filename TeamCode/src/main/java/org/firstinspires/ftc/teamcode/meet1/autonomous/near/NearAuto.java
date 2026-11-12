@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.meet1.paths.near;
+package org.firstinspires.ftc.teamcode.meet1.autonomous.near;
 
 import com.pedropathing.math.Pose;
 
-import org.firstinspires.ftc.teamcode.meet1.paths.SuperAuto;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.SuperAuto;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
 public class NearAuto extends SuperAuto {

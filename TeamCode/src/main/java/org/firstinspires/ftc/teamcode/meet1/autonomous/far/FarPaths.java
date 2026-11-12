@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.meet1.paths.far;
+package org.firstinspires.ftc.teamcode.meet1.autonomous.far;
 
-import static com.pedropathing.api.Paths.*;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;

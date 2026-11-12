@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.meet1.paths.near;
+package org.firstinspires.ftc.teamcode.meet1.autonomous.near;
 
 import com.pedropathing.api.Paths;
 

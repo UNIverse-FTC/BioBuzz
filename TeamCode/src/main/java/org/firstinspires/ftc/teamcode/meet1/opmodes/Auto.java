@@ -6,14 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.meet1.hardware.RobotHardware;
-import org.firstinspires.ftc.teamcode.meet1.paths.PathExecutor;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.PathExecutor;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.Button;
-import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.FlipFlopButton;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ToggleButton;
 
 @Autonomous(name = "\uD83E\uDD16 Autonomous")
