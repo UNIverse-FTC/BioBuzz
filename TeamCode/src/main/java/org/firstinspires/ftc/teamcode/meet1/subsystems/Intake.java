@@ -9,14 +9,11 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Intake {
 
     MotorEx intakeMotor;
-    CustomPID customPID;
-
     private double targetRPM = 0;
 
     private double RPM = 0;
     public Intake(RobotHardware robotHardware) {
         intakeMotor = robotHardware.intake;
-        customPID = robotHardware.intakePID;
     }
 
 

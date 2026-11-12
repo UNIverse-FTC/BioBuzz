@@ -7,9 +7,6 @@ import com.pedropathing.paths.Path;
 
 import com.pedropathing.api.Paths;
 public class FarPaths {
-
-
-
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     public final Pose start = poseFactory.of(56, 8, 90);

@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.meet1.subsystems.enums.DrivetrainState;
 import org.firstinspires.ftc.teamcode.meet1.util.Constants;
 import org.firstinspires.ftc.teamcode.meet1.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
-import org.firstinspires.ftc.teamcode.meet1.util.Util;
 
 public class Drivetrain {
 
@@ -21,6 +20,13 @@ public class Drivetrain {
     private boolean aiming = false;
 
     private CustomPID aimPID;
+
+    private boolean returning = false;
+
+    private double returnHeading = 0.0;
+
+    public static double xDistance;
+    public static double yDistance;
 
     Pose hivePosition;
 
@@ -65,13 +71,24 @@ public class Drivetrain {
             }
         }
 
-        double targetHeading = Util.getAimHeading(hivePosition, robotPosition);
+        double targetHeading = getAimHeading(hivePosition, robotPosition);
 
         if (aiming) {
             autoAim(targetHeading);
         }
         else {
-            driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+            if (returning) {
+                autoAim(returnHeading);
+                if (Math.abs(robotPosition.heading() - returnHeading) < 0.174533) {
+                    returning = false;
+                }
+                else if (lateral > 0.1) {
+                    returning = false;
+                }
+            }
+            else {
+                driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+            }
         }
 
         Debug.updateRobot(robotPosition, targetHeading);
@@ -83,6 +100,10 @@ public class Drivetrain {
     }
     public void aim(boolean active) {
         aiming = active;
+        returning = !active;
+        if (!active) {
+            returnHeading = robotPosition.heading() + Math.PI;
+        }
     }
 
     private void autoAim(double heading) {
@@ -91,7 +112,7 @@ public class Drivetrain {
     }
 
     public double calculateDistance() {
-        return Math.hypot(Util.xDistance,Util.yDistance);
+        return Math.hypot(xDistance,yDistance);
     }
 
     public void resetPos() {
@@ -102,4 +123,17 @@ public class Drivetrain {
         //implement this later ig, should be simple. filter by alliance & closest hive
     }
 
+
+    public static double getAimHeading(Pose hivePosition, Pose robotPosition) {
+
+        xDistance = robotPosition.x() - hivePosition.x();
+        yDistance = hivePosition.y() - robotPosition.y();
+
+        if (xDistance > 0) {
+            return Math.atan(yDistance / xDistance);
+        }
+        else {
+            return Math.atan((yDistance / xDistance) + Math.PI);
+        }
+    }
 }

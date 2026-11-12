@@ -8,7 +8,6 @@ public class ContinuousButton implements Button {
     Runnable falseBinding = null;
     private final Gamepad gamepad;
     private final ButtonType button;
-    private boolean previousButton = false;
     public ContinuousButton(Gamepad gamepad, ButtonType button) {
         this.gamepad = gamepad;
         this.button = button;
@@ -20,8 +19,6 @@ public class ContinuousButton implements Button {
         this.trueBinding = trueBinding;
         this.falseBinding = falseBinding;
     }
-    boolean returnVal = false;
-
 
     @Override
     public boolean get() {

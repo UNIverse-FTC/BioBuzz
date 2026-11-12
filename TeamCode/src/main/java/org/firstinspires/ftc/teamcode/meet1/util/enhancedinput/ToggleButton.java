@@ -9,6 +9,8 @@ public class ToggleButton implements Button {
     Runnable trueBinding = null;
     Runnable falseBinding = null;
 
+
+
     public ToggleButton(Gamepad gamepad, ButtonType button) {
         this.button = new MomentarySwitchButton(gamepad, button);
     }
@@ -18,23 +20,34 @@ public class ToggleButton implements Button {
         this.trueBinding = trueBinding;
         this.falseBinding = falseBinding;
     }
-    boolean returnVal = false;
+    boolean buttonState = false;
 
 
     @Override
     public boolean get() {
         if (button.get()) {
-            returnVal = !returnVal;
+            buttonState = !buttonState;
         }
-        return returnVal;
+        return buttonState;
+    }
+
+    boolean previousState = false;
+    public Toggle getMomentary() {
+        Toggle toggle = new Toggle();
+        boolean currentState = buttonState;
+        toggle.on = currentState && !previousState;
+        toggle.off = !currentState && previousState;
+
+        previousState = currentState;
+        return toggle;
     }
 
     @Override
     public void update() {
-        if (trueBinding != null && get()) {
+        if (trueBinding != null && getMomentary().on) {
             trueBinding.run();
         }
-        else if (falseBinding != null && !get()) {
+        else if (falseBinding != null && !getMomentary().off) {
             falseBinding.run();
         }
     }
