@@ -54,11 +54,13 @@ public class Teleop extends LinearOpMode {
 
                 armShooter = new ToggleButton(gamepad1, A),
                 speedMode = new ToggleButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
-                toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
-                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER, intake::suck, intake::stoppySloppy)
+                toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false))
+//                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER, intake::suck, intake::stoppySloppy)
         );
 
         while (opModeIsActive()) {
+
+            intake.suck(gamepad1.right_trigger);
 
             drivetrain.drive(
                     gamepad1.right_stick_x * speed * 0.7,

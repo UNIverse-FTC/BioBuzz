@@ -17,8 +17,8 @@ public class Intake {
     }
 
 
-    public void suck() {
-        targetRPM = 400;
+    public void suck(float speed) {
+        targetRPM = 400 * speed;
     }
     public void eject() {
         targetRPM = -400;
