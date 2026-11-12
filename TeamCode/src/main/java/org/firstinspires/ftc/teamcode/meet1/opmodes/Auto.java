@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.meet1.opmodes;
 
-import static org.firstinspires.ftc.teamcode.meet1.subsystems.enums.DrivetrainState.AUTO;
 import static org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ButtonType.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
