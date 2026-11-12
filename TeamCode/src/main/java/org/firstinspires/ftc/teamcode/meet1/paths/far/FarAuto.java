@@ -30,7 +30,7 @@ public class FarAuto extends SuperAuto {
             case (2):
                 if (launcher.ready1 && launcher.ready2) {
                     timer.reset();
-                    intake.suck();
+                    intake.suck(1);
                     pathState++;
                 }
                 break;
@@ -44,7 +44,7 @@ public class FarAuto extends SuperAuto {
                 break;
             case (4):
                 if (!follower.isBusy()) {
-                    intake.suck();
+                    intake.suck(1);
                     follower.follow(autoPath.path3());
                     pathState++;
                 }
@@ -72,7 +72,7 @@ public class FarAuto extends SuperAuto {
             case (8):
                 if (launcher.ready1 && launcher.ready2) {
                     timer.reset();
-                    intake.suck();
+                    intake.suck(1);
                     pathState++;
                 }
             case (9):

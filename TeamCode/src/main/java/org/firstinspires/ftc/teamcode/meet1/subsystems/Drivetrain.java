@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.meet1.subsystems;
 
+import com.pedropathing.api.Paths;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
+import com.pedropathing.paths.Path;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 
 import org.firstinspires.ftc.teamcode.meet1.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet1.opmodes.OpModeStorage;
-import org.firstinspires.ftc.teamcode.meet1.subsystems.enums.DrivetrainState;
 import org.firstinspires.ftc.teamcode.meet1.util.Constants;
 import org.firstinspires.ftc.teamcode.meet1.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
@@ -31,7 +32,7 @@ public class Drivetrain {
     Pose hivePosition;
 
     private double strafe, lateral, horizontal;
-    public Drivetrain(RobotHardware hardware, DrivetrainState drivetrainState) {
+    public Drivetrain(RobotHardware hardware) {
 
         driveTrain = hardware.mecanum;
         aimPID = hardware.aimPID;
@@ -72,22 +73,20 @@ public class Drivetrain {
         }
 
         double targetHeading = getAimHeading(hivePosition, robotPosition);
-
-        if (aiming) {
-            autoAim(targetHeading);
-        }
-        else {
-            if (returning) {
-                autoAim(returnHeading);
-                if (Math.abs(robotPosition.heading() - returnHeading) < 0.174533) {
-                    returning = false;
+        if (!follower.isBusy()) {
+            if (aiming) {
+                autoAim(targetHeading);
+            } else {
+                if (returning) {
+                    autoAim(returnHeading);
+                    if (Math.abs(robotPosition.heading() - returnHeading) < 0.174533) {
+                        returning = false;
+                    } else if (lateral > 0.1) {
+                        returning = false;
+                    }
+                } else {
+                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
                 }
-                else if (lateral > 0.1) {
-                    returning = false;
-                }
-            }
-            else {
-                driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
             }
         }
 
@@ -119,10 +118,32 @@ public class Drivetrain {
         follower.setPose(new Pose(56, 8, Math.toRadians(90)));
     }
 
-    public void driveToLaunch() {
-        //implement this later ig, should be simple. filter by alliance & closest hive
+    public void driveToLaunch(boolean alliance) {
+        if (alliance) {
+            if (robotPosition.y() > 70) {
+                follower.follow(createPath(Constants.Poses.RED_NORTH));
+            }
+            else {
+                follower.follow(createPath(Constants.Poses.RED_SOUTH));
+            }
+        }
+        else  {
+            if (robotPosition.y() > 70) {
+                follower.follow(createPath(Constants.Poses.BLUE_NORTH));
+            }
+            else {
+                follower.follow(createPath(Constants.Poses.BLUE_SOUTH));
+            }
+        }
     }
 
+    public void stopFollower() {
+        follower.stop();
+    }
+
+    private Path createPath(Pose target) {
+        return Paths.line(robotPosition, target).linear(robotPosition, target);
+    }
 
     public static double getAimHeading(Pose hivePosition, Pose robotPosition) {
 

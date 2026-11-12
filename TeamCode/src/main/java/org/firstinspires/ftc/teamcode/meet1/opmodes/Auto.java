@@ -27,7 +27,7 @@ public class Auto extends LinearOpMode {
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
-        Drivetrain drivetrain = new Drivetrain(robotHardware, AUTO);
+        Drivetrain drivetrain = new Drivetrain(robotHardware);
 
         Subsystems subsystems = new Subsystems(intake, launcher, drivetrain);
 

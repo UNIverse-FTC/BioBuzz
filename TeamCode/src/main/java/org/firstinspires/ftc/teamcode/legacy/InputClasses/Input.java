@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.meet1.subsystems.InputClasses;
+package org.firstinspires.ftc.teamcode.legacy.InputClasses;
 
 
 import  com.qualcomm.robotcore.hardware.Gamepad;

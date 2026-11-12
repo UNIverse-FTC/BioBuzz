@@ -30,15 +30,24 @@ public class Constants {
         public static double KV = 1;
     }
 
+    @Configurable
+    public static class Poses {
+        public static Pose RED_SOUTH = new Pose(58, 24, Math.toRadians(270));
+        public static Pose RED_NORTH = new Pose(58, 120, 0);
+        public static Pose BLUE_SOUTH = new Pose(84, 24, Math.toRadians(270));
+        public static Pose BLUE_NORTH = new Pose(84, 120, 0);
+
+    }
+
 
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;
 
     public static Pose RED_HIVE_SOUTH = new Pose(58, 58, 0);
-    public static Pose RED_HIVE_NORTH = new Pose(58, 88, 0);
+    public static Pose RED_HIVE_NORTH = new Pose(58, 84, 0);
 
-    public static Pose BLUE_HIVE_SOUTH = new Pose(88, 58, 0);
-    public static Pose BLUE_HIVE_NORTH = new Pose(88, 88, 0);
+    public static Pose BLUE_HIVE_SOUTH = new Pose(84, 58, 0);
+    public static Pose BLUE_HIVE_NORTH = new Pose(84, 84, 0);
 
 
     @Configurable

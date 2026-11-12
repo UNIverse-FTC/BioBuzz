@@ -29,7 +29,7 @@ public class NearAuto extends SuperAuto {
                 break;
             case (2):
                 if(!follower.isBusy() && launcher.ready1 && launcher.ready2) {
-                    intake.suck();
+                    intake.suck(1);
                     timer.reset();
                     pathState++;
                 }
