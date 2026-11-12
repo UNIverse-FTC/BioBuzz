@@ -16,8 +16,9 @@ public class RobotHardware {
     public HardwareMap hardwareMap;
     public MecanumDrive mecanum;
     public ServoEx hoodServo;
-    public CustomPID intakePID;
     public VoltageSensor voltage;
+
+    public CustomPID aimPID;
     public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
@@ -55,6 +56,16 @@ public class RobotHardware {
 
         mecanum = new MecanumDrive(frontLeft, backRight, backLeft, frontRight);
         mecanum.setRightSideInverted(true);
+
+        aimPID = new CustomPID(
+                Constants.Drivetrain.KP,
+                Constants.Drivetrain.KI,
+                Constants.Drivetrain.KD,
+                Constants.Drivetrain.KV,
+                Constants.Drivetrain.KS,
+                0,
+                0
+        );
     }
 
 }

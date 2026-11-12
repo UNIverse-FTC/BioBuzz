@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
-public class SuperAuto implements Auto{
+public class SuperAuto implements Auto {
 
     public Intake intake;
     public Launcher launcher;
