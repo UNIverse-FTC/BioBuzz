@@ -48,7 +48,7 @@ public class Auto extends LinearOpMode {
 
             }
 
-            Debug.telemetry.addLine("A for near, B for far");
+            Debug.telemetry.addLine("A to switch between Far and Near");
             Debug.telemetry.addLine("Selected: " + alliance);
             Debug.update();
         }
