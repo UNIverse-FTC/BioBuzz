@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.meet1.util.enhancedinput;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.meet1.util.Debug;
+
 public class ToggleButton implements Button {
 
     private final Button button;
@@ -31,23 +33,23 @@ public class ToggleButton implements Button {
         return buttonState;
     }
 
-    boolean previousState = false;
-    public Toggle getMomentary() {
-        Toggle toggle = new Toggle();
-        boolean currentState = buttonState;
-        toggle.on = currentState && !previousState;
-        toggle.off = !currentState && previousState;
-
-        previousState = currentState;
-        return toggle;
-    }
+//    boolean previousState = false;
+//    public Toggle getMomentary() {
+//        Toggle toggle = new Toggle();
+//        boolean currentState = get();
+//        toggle.on = currentState && !previousState;
+//        toggle.off = !currentState && previousState;
+//
+//        previousState = currentState;
+//        return toggle;
+//    }
 
     @Override
     public void update() {
-        if (trueBinding != null && getMomentary().on) {
+        if (trueBinding != null && get()) {
             trueBinding.run();
         }
-        else if (falseBinding != null && !getMomentary().off) {
+        else if (falseBinding != null && !get()) {
             falseBinding.run();
         }
     }

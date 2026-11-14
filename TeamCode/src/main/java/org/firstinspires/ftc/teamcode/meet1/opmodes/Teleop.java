@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.Button;
+import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ContinuousButton;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.MomentarySwitchButton;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ToggleButton;
 
@@ -22,7 +23,7 @@ import java.util.List;
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
 
-    Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle, autoToLaunch, emergencyStop;
+    Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle, autoToLaunch, emergencyStop, fieldCentric;
     double fallBackSpeed = 2740;
     double speed = 1;
 
@@ -67,10 +68,11 @@ public class Teleop extends LinearOpMode {
                 emergencyStop = new MomentarySwitchButton(gamepad2, B, drivetrain::stopFollower),
 
                 armShooter = new ToggleButton(gamepad1, A),
-                speedMode = new ToggleButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
+                speedMode = new ContinuousButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
                 toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
 //                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER, intake::suck, intake::stoppySloppy)
-                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch(allianceSelect.get()))
+                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch(allianceSelect.get())),
+                fieldCentric = new ToggleButton(gamepad1, RIGHT_BUMPER, () -> drivetrain.toggleFieldCentric(true), () -> drivetrain.toggleFieldCentric(false))
 
         );
 
@@ -79,10 +81,10 @@ public class Teleop extends LinearOpMode {
             intake.suck(gamepad1.right_trigger);
 
             drivetrain.drive(
-                    gamepad1.right_stick_x * speed * 0.7,
                     gamepad1.left_stick_y * speed,
-                    gamepad1.left_stick_x * speed
-            );
+                    gamepad1.left_stick_x * speed,
+                    gamepad1.right_stick_x * speed * 0.7
+                    );
 
             Debug.telemetry.addLine("Manual Speed: "  + fallBackSpeed);
 

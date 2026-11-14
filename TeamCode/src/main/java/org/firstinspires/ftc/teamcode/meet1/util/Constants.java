@@ -14,7 +14,7 @@ public class Constants {
     public static class Drivetrain {
         public static double KP = 0.56;
         public static double KI = 0.0;
-        public static double KD = 0.0;
+        public static double KD = 0.08;
 
         public static double KS = 0.0;
         public static double KV = 0.0;
@@ -43,11 +43,11 @@ public class Constants {
     public static double SERVO_POLLEN = 0.0;
     public static double SERVO_NECTAR = 0.47;
 
-    public static Pose RED_HIVE_SOUTH = new Pose(58, 58, 0);
-    public static Pose RED_HIVE_NORTH = new Pose(58, 84, 0);
+    public static Pose RED_HIVE_SOUTH = new Pose(58, 58, Math.toRadians(90));
+    public static Pose RED_HIVE_NORTH = new Pose(58, 84, Math.toRadians(270));
 
-    public static Pose BLUE_HIVE_SOUTH = new Pose(84, 58, 0);
-    public static Pose BLUE_HIVE_NORTH = new Pose(84, 84, 0);
+    public static Pose BLUE_HIVE_SOUTH = new Pose(84, 58, Math.toRadians(90));
+    public static Pose BLUE_HIVE_NORTH = new Pose(84, 84, Math.toRadians(270));
 
 
     @Configurable

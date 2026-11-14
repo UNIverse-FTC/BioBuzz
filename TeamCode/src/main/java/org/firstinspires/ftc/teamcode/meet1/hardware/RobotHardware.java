@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.meet1.hardware;
 
+import com.pedropathing.controllers.Controller;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
@@ -19,6 +20,8 @@ public class RobotHardware {
     public VoltageSensor voltage;
 
     public CustomPID aimPID;
+
+    public Controller headingPID;
     public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
@@ -32,7 +35,6 @@ public class RobotHardware {
         backLeft.setInverted(true);
         backRight = new MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_312);
         backRight.setInverted(true);
-        hoodServo = new ServoEx(hardwareMap, "hoodServo");
 
         shooter1 = new MotorEx(hardwareMap, "pollenMotor", Motor.GoBILDA.BARE);
         shooter2 = new MotorEx(hardwareMap, "nectarMotor", Motor.GoBILDA.BARE);
@@ -66,6 +68,13 @@ public class RobotHardware {
                 0,
                 0
         );
+
+        headingPID = Controller.pid(
+                Constants.Drivetrain.KP,
+                Constants.Drivetrain.KI,
+                Constants.Drivetrain.KD
+                );
+
     }
 
 }

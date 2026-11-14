@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.meet1.subsystems;
 
 import com.pedropathing.api.Paths;
+import com.pedropathing.controllers.Controller;
+import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
 
 import com.pedropathing.paths.Path;
@@ -29,25 +32,34 @@ public class Drivetrain {
     public static double xDistance;
     public static double yDistance;
 
+    private Controller headingPID;
+
+    private boolean fieldCentric = false;
+
+    private DrivePowers drivePowers;
+
+    private double targetHeading;
+
     Pose hivePosition;
 
-    private double strafe, lateral, horizontal;
+    private double forward, lateral, turn;
     public Drivetrain(RobotHardware hardware) {
 
         driveTrain = hardware.mecanum;
         aimPID = hardware.aimPID;
 
+        headingPID = hardware.headingPID;
 
         follower = org.firstinspires.ftc.teamcode.pedro.Constants.create(hardware.hardwareMap);
         follower.setPose(OpModeStorage.autonomousEndPose);
     }
 
 
-    public  void drive(double lateral, double horizontal, double strafe)
+    public  void drive(double forward, double lateral, double turn)
     {
+        this.forward = forward;
         this.lateral = lateral;
-        this.horizontal = horizontal;
-        this.strafe = strafe;
+        this.turn = turn;
     }
 
     public void update() {
@@ -72,21 +84,31 @@ public class Drivetrain {
             }
         }
 
-        double targetHeading = getAimHeading(hivePosition, robotPosition);
+        targetHeading = getAimHeading(hivePosition, robotPosition);
+
         if (!follower.isBusy()) {
+            if (fieldCentric) {
+                drivePowers = ManualDrive.fieldCentric(lateral, -forward, -turn, robotPosition.heading());
+
+            }
+            else {
+                drivePowers = new DrivePowers(-forward, -lateral, -turn);
+            }
+            Debug.panelsTelemetry.addLine(drivePowers.toString());
             if (aiming) {
-                autoAim(targetHeading);
-            } else {
-                if (returning) {
-                    autoAim(returnHeading);
-                    if (Math.abs(robotPosition.heading() - returnHeading) < 0.174533) {
-                        returning = false;
-                    } else if (lateral > 0.1) {
-                        returning = false;
-                    }
-                } else {
-                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
-                }
+//                autoAim(targetHeading);
+                drivePowers = ManualDrive.headingLock(follower, headingPID, drivePowers, targetHeading);
+                ManualDrive.driveOrHold(
+                        follower,
+                        drivePowers)
+                ;
+            }
+            else {
+//                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
+                ManualDrive.driveOrHold(
+                        follower,
+                        drivePowers
+                );
             }
         }
 
@@ -94,6 +116,9 @@ public class Drivetrain {
 
         Debug.panelsTelemetry.addData("Target Heading", Math.toDegrees(targetHeading));
         Debug.panelsTelemetry.addData("Robot Heading", Math.round(Math.toDegrees(robotPosition.heading())));
+        Debug.panelsTelemetry.addData("Return Heading", Math.round(Math.toDegrees(returnHeading)));
+
+        Debug.telemetry.addLine("Aiming?: " + aiming);
 
         Debug.updateActiveHive(hivePosition);
     }
@@ -105,11 +130,6 @@ public class Drivetrain {
         }
     }
 
-    private void autoAim(double heading) {
-        double angleAdjustment = aimPID.calculate(heading, robotPosition.heading());
-        driveTrain.driveRobotCentric(-strafe, angleAdjustment, horizontal);
-    }
-
     public double calculateDistance() {
         return Math.hypot(xDistance,yDistance);
     }
@@ -119,26 +139,32 @@ public class Drivetrain {
     }
 
     public void driveToLaunch(boolean alliance) {
+        Pose poseTo;
         if (alliance) {
             if (robotPosition.y() > 70) {
-                follower.follow(createPath(Constants.Poses.RED_NORTH));
+                poseTo = Constants.Poses.RED_NORTH;
             }
             else {
-                follower.follow(createPath(Constants.Poses.RED_SOUTH));
+                poseTo = Constants.Poses.RED_SOUTH;
             }
         }
         else  {
             if (robotPosition.y() > 70) {
-                follower.follow(createPath(Constants.Poses.BLUE_NORTH));
+                poseTo = Constants.Poses.BLUE_NORTH;
             }
             else {
-                follower.follow(createPath(Constants.Poses.BLUE_SOUTH));
+                poseTo = Constants.Poses.BLUE_SOUTH;
             }
         }
+        follower.follow(createPath(poseTo));
     }
 
     public void stopFollower() {
         follower.stop();
+    }
+
+    public void toggleFieldCentric(boolean toggle) {
+        fieldCentric = toggle;
     }
 
     private Path createPath(Pose target) {
@@ -147,14 +173,16 @@ public class Drivetrain {
 
     public static double getAimHeading(Pose hivePosition, Pose robotPosition) {
 
-        xDistance = robotPosition.x() - hivePosition.x();
+        xDistance = hivePosition.x() - robotPosition.x();
         yDistance = hivePosition.y() - robotPosition.y();
 
-        if (xDistance > 0) {
-            return Math.atan(yDistance / xDistance);
+        if (xDistance >= 0) {
+            return Math.atan(yDistance / xDistance) + Math.PI;
         }
         else {
-            return Math.atan((yDistance / xDistance) + Math.PI);
+            return Math.atan(yDistance / xDistance) + (2 * Math.PI);
+
         }
+
     }
 }
