@@ -35,27 +35,41 @@ public class Auto extends LinearOpMode {
 
 
         Button autoSelector = new ToggleButton(gamepad1, A);
+        Button allianceSelect = new ToggleButton(gamepad1, B);
 
         while (opModeInInit()){
 
-            String alliance = "none??";
+            String autoType = "none??";
+
 
             if (autoSelector.get()) {
-                alliance = "Near & Park";
+                autoType = "Near & Park";
             }
             else {
-                alliance= "Far & Park";
+                autoType= "Far & Park";
 
             }
 
-            Debug.telemetry.addLine("A to switch between Far and Near");
+            String alliance = "none??";
+
+            if (allianceSelect.get()) {
+                alliance = "Red";
+            }
+            else {
+                alliance= "Blue";
+
+            }
+
+            Debug.telemetry.addLine("B to change alliance");
             Debug.telemetry.addLine("Selected: " + alliance);
+
+            Debug.telemetry.addLine("A to switch between Far and Near");
+            Debug.telemetry.addLine("Selected: " + autoType);
             Debug.update();
         }
 
-
         waitForStart();
-        pathExecutor.init(subsystems, autoSelector);
+        pathExecutor.init(subsystems, autoSelector, allianceSelect);
 
 
         while (opModeIsActive()) {

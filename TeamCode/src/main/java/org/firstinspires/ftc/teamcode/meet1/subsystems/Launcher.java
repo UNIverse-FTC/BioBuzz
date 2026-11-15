@@ -90,16 +90,19 @@ public class Launcher {
         nectarLUT.createLUT();
         //this continues
         pollenLUT.add(0,2400);
-        pollenLUT.add(10, 2500);
-        pollenLUT.add(20, 2600);
-        pollenLUT.add(30, 2700);
-        pollenLUT.add(40, 2800);
-        pollenLUT.add(50, 2900);
-        pollenLUT.add(60,3000);
-        pollenLUT.add(70, 3100);
-        pollenLUT.add(80, 3200);
-        pollenLUT.add(90, 3300);
-        pollenLUT.add(200, 6000);
+        pollenLUT.add(10, 2400);
+        pollenLUT.add(30, 2710);
+        pollenLUT.add(37, 2660);
+        pollenLUT.add(38, 2720);
+        pollenLUT.add(40, 2710);
+        pollenLUT.add(42, 2680);
+        pollenLUT.add(45, 2760);
+        pollenLUT.add(50, 2800);
+        pollenLUT.add(60,2900);
+        pollenLUT.add(70, 3000);
+        pollenLUT.add(80, 3100);
+        pollenLUT.add(90, 3200);
+        pollenLUT.add(200,  6000);
 
         pollenLUT.createLUT();
         //same here

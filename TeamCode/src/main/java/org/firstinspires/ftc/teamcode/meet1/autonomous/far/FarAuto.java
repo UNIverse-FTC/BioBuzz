@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode.meet1.autonomous.far;
 import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.teamcode.meet1.autonomous.SuperAuto;
+import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
 public class FarAuto extends SuperAuto {
 
-    FarPaths autoPath = new FarPaths();
-    public FarAuto(Subsystems subsystems) {
-        super(subsystems);
+    FarPaths autoPath;
+    public FarAuto(Subsystems subsystems, Alliance alliance) {
+        super(subsystems, alliance);
+        autoPath = new FarPaths(alliance);
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")
@@ -30,7 +32,7 @@ public class FarAuto extends SuperAuto {
             case (2):
                 if (launcher.ready1 && launcher.ready2) {
                     timer.reset();
-                    intake.suck(1);
+                    intake.suck();
                     pathState++;
                 }
                 break;
@@ -39,13 +41,15 @@ public class FarAuto extends SuperAuto {
                     intake.stoppySloppy();
                     launcher.stop();
                     follower.follow(autoPath.path2());
+                    timer.reset();
                     pathState++;
                 }
                 break;
             case (4):
-                if (!follower.isBusy()) {
-                    intake.suck(1);
+                if (!follower.isBusy() || timer.seconds() > 2.5) {
+                    intake.suck();
                     follower.follow(autoPath.path3());
+                    timer.reset();
                     pathState++;
                 }
                 break;
@@ -53,6 +57,7 @@ public class FarAuto extends SuperAuto {
                 if (!follower.isBusy()) {
                     intake.stoppySloppy();
                     follower.follow(autoPath.path4());
+                    timer.reset();
                     pathState++;
                 }
                 break;
@@ -72,7 +77,8 @@ public class FarAuto extends SuperAuto {
             case (8):
                 if (launcher.ready1 && launcher.ready2) {
                     timer.reset();
-                    intake.suck(1);
+                    intake.suck();
+                    timer.reset();
                     pathState++;
                 }
             case (9):

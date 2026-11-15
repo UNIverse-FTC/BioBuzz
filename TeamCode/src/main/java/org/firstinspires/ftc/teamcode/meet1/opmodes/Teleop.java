@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.meet1.opmodes;
 
 import static org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ButtonType.*;
 
+import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,7 +24,7 @@ import java.util.List;
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
 
-    Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle, autoToLaunch, emergencyStop, fieldCentric;
+    Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle, autoToLaunch, emergencyStop, fieldCentric, ejectIntake;
     double fallBackSpeed = 2740;
     double speed = 1;
 
@@ -38,24 +39,9 @@ public class Teleop extends LinearOpMode {
 
         Debug.init(telemetry);
 
-        Button allianceSelect = new ToggleButton(gamepad1, A);
-        while (opModeInInit()) {
-            String alliance = "none??";
-
-            if (allianceSelect.get()) {
-                alliance = "Red";
-            }
-            else {
-                alliance= "Blue";
-
-            }
-
-            Debug.telemetry.addLine("A to change alliance");
-            Debug.telemetry.addLine("Selected: " + alliance);
-            Debug.update();
-        }
         waitForStart();
 
+        boolean alliance = OpModeStorage.alliance == Alliance.RED;
 
 
 
@@ -69,16 +55,16 @@ public class Teleop extends LinearOpMode {
 
                 armShooter = new ToggleButton(gamepad1, A),
                 speedMode = new ContinuousButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
-                toggleAim = new ToggleButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
-//                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER, intake::suck, intake::stoppySloppy)
-                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch(allianceSelect.get())),
-                fieldCentric = new ToggleButton(gamepad1, RIGHT_BUMPER, () -> drivetrain.toggleFieldCentric(true), () -> drivetrain.toggleFieldCentric(false))
+                toggleAim = new ContinuousButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
+                intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER),
+                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch(alliance)),
+                fieldCentric = new ToggleButton(gamepad1, RIGHT_BUMPER, () -> drivetrain.toggleFieldCentric(true), () -> drivetrain.toggleFieldCentric(false)),
+                ejectIntake = new ContinuousButton(gamepad1, Y)
 
         );
 
         while (opModeIsActive()) {
 
-            intake.suck(gamepad1.right_trigger);
 
             drivetrain.drive(
                     gamepad1.left_stick_y * speed,
@@ -105,6 +91,18 @@ public class Teleop extends LinearOpMode {
                 launcher.stop();
 
                 Debug.telemetry.addLine("Shooter: IDLE");
+            }
+
+            if (gamepad1.right_trigger_pressed) {
+                intake.suck();
+            }
+            else {
+                if (gamepad1.y) {
+                    intake.eject();
+                }
+                else {
+                    intake.stoppySloppy();
+                }
             }
 
 

@@ -5,19 +5,31 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 
 import com.pedropathing.api.Paths;
+
+import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
+
 public class FarPaths {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
+    public FarPaths(Alliance alliance) {
+        if(alliance == Alliance.BLUE)
+        {
+            poseFactory.mirrorX(70.75);
+            poseFactory.mirrorY(70.75);
+        }
+    }
+
+
     public final Pose start = poseFactory.of(56, 8, 90);
-    private final Pose path1 = poseFactory.of(56, 30, 270);
-    private final Pose point2Start = poseFactory.of(56, 30, 270);
+    private final Pose path1 = poseFactory.of(58, 24, 90);
+    private final Pose point2Start = poseFactory.of(58, 24, 90);
     private final Pose point2 = poseFactory.of(18, 9, 180);
     private final Pose point3Start = poseFactory.of(18, 9, 180);
-    private final Pose point3 = poseFactory.of(8, 8, 270);
-    private final Pose point4Start = poseFactory.of(8, 8, 270);
-    private final Pose point4 = poseFactory.of(60, 37, 90);
-    private final Pose point5 = poseFactory.of(60, 110, 90);
-    private final Pose point6Start = poseFactory.of(60, 110, 90);
+    private final Pose point3 = poseFactory.of(10, 8, 270);
+    private final Pose point4Start = poseFactory.of(10, 8, 270);
+    private final Pose point4 = poseFactory.of(65, 37, 90);
+    private final Pose point5 = poseFactory.of(58, 120, 270);
+    private final Pose point6Start = poseFactory.of(58, 120, 270);
     private final Pose point6 = poseFactory.of(10.6466, 115.9248, 0);
 
     public Path path1() {

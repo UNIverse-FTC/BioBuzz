@@ -104,11 +104,8 @@ public class Drivetrain {
                 ;
             }
             else {
-//                    driveTrain.driveRobotCentric(strafe, lateral, -horizontal);
-                ManualDrive.driveOrHold(
-                        follower,
-                        drivePowers
-                );
+                follower.manual(drivePowers);
+
             }
         }
 
@@ -150,10 +147,10 @@ public class Drivetrain {
         }
         else  {
             if (robotPosition.y() > 70) {
-                poseTo = Constants.Poses.BLUE_NORTH;
+                poseTo = Constants.Poses.RED_NORTH;
             }
             else {
-                poseTo = Constants.Poses.BLUE_SOUTH;
+                poseTo = Constants.Poses.RED_SOUTH;
             }
         }
         follower.follow(createPath(poseTo));
@@ -177,10 +174,10 @@ public class Drivetrain {
         yDistance = hivePosition.y() - robotPosition.y();
 
         if (xDistance >= 0) {
-            return Math.atan(yDistance / xDistance) + Math.PI;
+            return Math.atan(yDistance / xDistance);
         }
         else {
-            return Math.atan(yDistance / xDistance) + (2 * Math.PI);
+            return Math.atan(yDistance / xDistance) + Math.PI;
 
         }
 
