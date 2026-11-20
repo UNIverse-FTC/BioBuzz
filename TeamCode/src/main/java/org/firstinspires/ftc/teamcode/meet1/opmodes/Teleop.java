@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.meet1.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;
+import org.firstinspires.ftc.teamcode.meet1.util.Blackboard;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.Button;
 import org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ContinuousButton;
@@ -118,6 +119,8 @@ public class Teleop extends LinearOpMode {
             for (Button button : buttons) {
                 button.update();
             }
+
+            Blackboard.UpdateBlackboard();
         }
     }
 

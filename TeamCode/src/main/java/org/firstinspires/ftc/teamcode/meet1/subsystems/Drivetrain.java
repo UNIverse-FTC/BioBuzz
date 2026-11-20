@@ -14,6 +14,7 @@ import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 import org.firstinspires.ftc.teamcode.meet1.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.meet1.opmodes.OpModeStorage;
 import org.firstinspires.ftc.teamcode.meet1.opmodes.Teleop;
+import org.firstinspires.ftc.teamcode.meet1.util.Blackboard;
 import org.firstinspires.ftc.teamcode.meet1.util.Constants;
 import org.firstinspires.ftc.teamcode.meet1.util.CustomPID;
 import org.firstinspires.ftc.teamcode.meet1.util.Debug;
@@ -73,14 +74,9 @@ public class Drivetrain {
 
         follower.update();
         robotPosition = follower.pose();
-
-
-        if (robotPosition.y() < 72) {
-            hivePosition = Constants.RED_HIVE_SOUTH;
-        }
-        else {
-            hivePosition = Constants.RED_HIVE_NORTH;
-        }
+        Blackboard.globalPosition = follower.pose();
+        Blackboard.globalHeading = robotPosition.heading();
+        hivePosition = Blackboard.currentHive;
 
         targetHeading = getAimHeading(hivePosition, robotPosition);
 
