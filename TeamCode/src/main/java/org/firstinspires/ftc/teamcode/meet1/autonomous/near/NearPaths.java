@@ -6,18 +6,9 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
-
 public class NearPaths {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    public NearPaths(Alliance alliance) {
-        if(alliance == Alliance.BLUE)
-        {
-            poseFactory.mirrorX(70.75);
-            poseFactory.mirrorY(70.75);
-        }
-    }
 
 
     public final Pose start = poseFactory.of(10, 126, 0);

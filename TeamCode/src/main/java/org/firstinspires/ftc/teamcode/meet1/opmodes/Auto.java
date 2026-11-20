@@ -25,7 +25,7 @@ public class Auto extends LinearOpMode {
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
         Launcher launcher = new Launcher(robotHardware);
         Intake intake = new Intake(robotHardware);
-        Drivetrain drivetrain = new Drivetrain(robotHardware);
+        Drivetrain drivetrain = new Drivetrain(robotHardware, null);
 
         Subsystems subsystems = new Subsystems(intake, launcher, drivetrain);
 
@@ -35,7 +35,6 @@ public class Auto extends LinearOpMode {
 
 
         Button autoSelector = new ToggleButton(gamepad1, A);
-        Button allianceSelect = new ToggleButton(gamepad1, B);
 
         while (opModeInInit()){
 
@@ -50,26 +49,13 @@ public class Auto extends LinearOpMode {
 
             }
 
-            String alliance = "none??";
-
-            if (allianceSelect.get()) {
-                alliance = "Red";
-            }
-            else {
-                alliance= "Blue";
-
-            }
-
-            Debug.telemetry.addLine("B to change alliance");
-            Debug.telemetry.addLine("Selected: " + alliance);
-
             Debug.telemetry.addLine("A to switch between Far and Near");
             Debug.telemetry.addLine("Selected: " + autoType);
             Debug.update();
         }
 
         waitForStart();
-        pathExecutor.init(subsystems, autoSelector, allianceSelect);
+        pathExecutor.init(subsystems, autoSelector);
 
 
         while (opModeIsActive()) {

@@ -9,6 +9,7 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 import com.seattlesolvers.solverslib.hardware.motors.Motor.RunMode;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.meet1.util.Constants;
 import org.firstinspires.ftc.teamcode.meet1.util.CustomPID;
 
@@ -22,11 +23,14 @@ public class RobotHardware {
     public CustomPID aimPID;
 
     public Controller headingPID;
+
+    public WebcamName webcam;
     public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
         voltage = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
+        webcam = hardwareMap.get(WebcamName.class, "Webcam");
         frontLeft = new MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_312);
         frontLeft.setInverted(true);
         frontRight = new MotorEx(hardwareMap, "frontRight", Motor.GoBILDA.RPM_312);

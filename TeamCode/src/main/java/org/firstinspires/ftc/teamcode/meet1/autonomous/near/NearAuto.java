@@ -3,15 +3,14 @@ package org.firstinspires.ftc.teamcode.meet1.autonomous.near;
 import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.teamcode.meet1.autonomous.SuperAuto;
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
 public class NearAuto extends SuperAuto {
     NearPaths autoPath;
 
-    public NearAuto(Subsystems subsystems, Alliance alliance) {
-        super(subsystems, alliance);
-        autoPath = new NearPaths(alliance);
+    public NearAuto(Subsystems subsystems) {
+        super(subsystems);
+        autoPath = new NearPaths();
     }
 
     @Override

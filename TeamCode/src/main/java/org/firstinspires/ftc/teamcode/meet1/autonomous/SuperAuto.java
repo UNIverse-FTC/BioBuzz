@@ -4,8 +4,6 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
-import org.firstinspires.ftc.teamcode.meet1.autonomous.near.NearPaths;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Launcher;
@@ -21,19 +19,16 @@ public class SuperAuto implements Auto {
 
     public ElapsedTime timer;
 
-    public Alliance alliance;
 
     public int pathState = 0;
 
 
     //NearPaths autoPath = new NearPaths();
 
-    public SuperAuto(Subsystems subsystems, Alliance alliance) {
+    public SuperAuto(Subsystems subsystems) {
         this.intake = subsystems.intake;
         this.launcher = subsystems.launcher;
         this.drivetrain = subsystems.drivetrain;
-
-        this.alliance = alliance;
         follower = drivetrain.follower;
         timer = new ElapsedTime();
     }

@@ -3,15 +3,14 @@ package org.firstinspires.ftc.teamcode.meet1.autonomous.far;
 import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.teamcode.meet1.autonomous.SuperAuto;
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Subsystems;
 
 public class FarAuto extends SuperAuto {
 
     FarPaths autoPath;
-    public FarAuto(Subsystems subsystems, Alliance alliance) {
-        super(subsystems, alliance);
-        autoPath = new FarPaths(alliance);
+    public FarAuto(Subsystems subsystems) {
+        super(subsystems);
+        autoPath = new FarPaths();
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")

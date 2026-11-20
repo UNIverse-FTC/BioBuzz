@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.meet1.opmodes;
 
 import static org.firstinspires.ftc.teamcode.meet1.util.enhancedinput.ButtonType.*;
 
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
 import org.firstinspires.ftc.teamcode.meet1.subsystems.Intake;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,7 +22,9 @@ import java.util.List;
 
 @TeleOp(name="\uD83C\uDFAE TeleOp")
 public class Teleop extends LinearOpMode {
-
+    public Launcher launcher;
+    public Intake intake;
+    public Drivetrain drivetrain;
     Button manualSpeedUp, manualSpeedDown, toggleOverride, poseReset, armShooter, speedMode, toggleAim, intakeToggle, autoToLaunch, emergencyStop, fieldCentric, ejectIntake;
     double fallBackSpeed = 2740;
     double speed = 1;
@@ -33,15 +34,13 @@ public class Teleop extends LinearOpMode {
 
         RobotHardware robotHardware = new RobotHardware(hardwareMap);
 
-        Launcher launcher = new Launcher(robotHardware);
-        Intake intake = new Intake(robotHardware);
-        Drivetrain drivetrain = new Drivetrain(robotHardware);
+        launcher = new Launcher(robotHardware);
+        intake = new Intake(robotHardware);
+        drivetrain = new Drivetrain(robotHardware, this);
 
         Debug.init(telemetry);
 
         waitForStart();
-
-        boolean alliance = OpModeStorage.alliance == Alliance.RED;
 
 
 
@@ -55,10 +54,13 @@ public class Teleop extends LinearOpMode {
 
                 armShooter = new ToggleButton(gamepad1, A),
                 speedMode = new ContinuousButton(gamepad1, LEFT_BUMPER, this::slowMode, this::normalMode),
-                toggleAim = new ContinuousButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true), () -> drivetrain.aim(false)),
+                toggleAim = new MomentarySwitchButton(gamepad1, LEFT_TRIGGER, () -> drivetrain.aim(true)),
                 intakeToggle = new ContinuousButton(gamepad1, RIGHT_TRIGGER),
-                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch(alliance)),
-                fieldCentric = new ToggleButton(gamepad1, RIGHT_BUMPER, () -> drivetrain.toggleFieldCentric(true), () -> drivetrain.toggleFieldCentric(false)),
+                autoToLaunch = new MomentarySwitchButton(gamepad1, X, () -> drivetrain.driveToLaunch()),
+                fieldCentric = new ToggleButton(gamepad1, RIGHT_BUMPER,
+                        () -> drivetrain.toggleFieldCentric(true),
+                        () -> drivetrain.toggleFieldCentric(false)
+                ),
                 ejectIntake = new ContinuousButton(gamepad1, Y)
 
         );

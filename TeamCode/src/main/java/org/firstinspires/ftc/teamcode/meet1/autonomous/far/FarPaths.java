@@ -6,18 +6,8 @@ import com.pedropathing.paths.Path;
 
 import com.pedropathing.api.Paths;
 
-import org.firstinspires.ftc.teamcode.meet1.autonomous.enums.Alliance;
-
 public class FarPaths {
     private final PoseFactory poseFactory = PoseFactory.degrees();
-
-    public FarPaths(Alliance alliance) {
-        if(alliance == Alliance.BLUE)
-        {
-            poseFactory.mirrorX(70.75);
-            poseFactory.mirrorY(70.75);
-        }
-    }
 
 
     public final Pose start = poseFactory.of(56, 8, 90);
